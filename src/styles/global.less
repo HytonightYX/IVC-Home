@@ -1,0 +1,168 @@
+/************** ant design **************/
+.ant-layout-header {
+  background: white;
+}
+
+.ant-layout-footer {
+  background: #ffffff;
+  color: #ffffff;
+}
+
+.ant-btn-primary {
+  background-color: #0066ff;
+  border-color: #0066ff;
+}
+
+body {
+  background: #ffffff !important;
+}
+
+
+/************** custom **************/
+.intro {
+  display: block;
+  font-size: 2em;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+}
+
+.header {
+  padding: 25px;
+  display: flex;
+  justify-content: space-between;
+  background: #ffffff;
+
+  .nav-top {
+    display: flex;
+
+    a {
+      color: #000;
+      font-size: 16px;
+    }
+
+    a:hover {
+      color: #0055E6;
+    }
+  }
+
+  .nav-top > :not(:last-child) {
+    margin-right: 1.5rem;
+  }
+
+  .logo {
+    color: #000000;
+    text-decoration: none;
+    font-size: 1.6rem;
+  }
+
+  .logo:hover {
+    color: #0055E6;
+  }
+
+  .version {
+    padding: 0.25rem 0.5rem;
+    margin-left: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.25;
+    font-weight: 500;
+    text-decoration: none;
+    color: #495057;
+    background-color: #f1f3f5;
+    border-radius: 4px;
+  }
+
+  .version:hover {
+    background-color: #e9ecef;
+  }
+}
+
+.content {
+  background: #ffffff;
+  text-align: center;
+
+  .picture-warp {
+    min-height: 400px;
+    width: 65%;
+    margin: 30px auto;
+
+    .feature-select {
+      text-align: left !important;
+    }
+
+    .two-pictures {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+
+      .preview, .result {
+        position: relative;
+        box-sizing: border-box;
+        max-width: 48%;
+        height: auto;
+
+        label {
+          position: absolute;
+          top: 0;
+          left: 0;
+          padding: 10px 16px;
+          background-color: #e6fafd;
+          color: gray;
+          border: 1px solid #d5d5d5;
+          line-height: 1;
+          z-index: 10;
+        }
+
+        img {
+          width: 100%;
+        }
+      }
+    }
+
+    .uploader {
+      margin-top: 20px;
+      text-align: left;
+
+      .ant-btn {
+        font-size: 16px;
+      }
+
+      .ant-input {
+        font-size: small;
+        width: 200px;
+        margin-right: 10px;
+      }
+
+      .ant_upload {
+        display: inline !important;
+      }
+    }
+  }
+
+  .buttons > :not(:last-child) {
+    margin-right: 1.5rem;
+  }
+}
+
+.g-pic {
+
+  width: 80vw;
+  margin: 0 auto;
+
+  .m-pic-wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .m-pic {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 500px;
+      width: 500px;
+      background: #495057;
+      margin: 10px;
+    }
+  }
+}
