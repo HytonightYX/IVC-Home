@@ -14,15 +14,14 @@ import {
 	Sidebar,
 	Visibility,
 } from 'semantic-ui-react'
-import { HashRouter as Router, Route, Switch } from 'react-router-dom'
-
+import { HashRouter as Router, Route, Switch, withRouter } from 'react-router-dom'
 
 import 'semantic-ui-css/semantic.min.css'
 import './styles/global.less'
 
+import HomepageHeading from './components/HomePageHeading'
 import Home from './pages/home'
 import Ache from './pages/ache'
-
 
 import TopMenu from './components/TopNav'
 
@@ -32,52 +31,12 @@ const getWidth = () => {
 	return isSSR ? Responsive.onlyTablet.minWidth : window.innerWidth
 }
 
-const HomepageHeading = ({mobile}) => (
-	<Container text className="m-head">
-		<Header
-			as='h1'
-			inverted
-			icon
-			style={{
-				fontSize: mobile ? '2em' : '4em',
-				fontWeight: 'normal',
-				marginBottom: 0,
-				marginTop: mobile ? '1.5em' : '3em',
-				background: '#1c1b1c'
-			}}
-			className="team-name"
-		>智能视频编码课题组</Header>
-
-		<Header
-			as='h2'
-			inverted
-			icon
-			content='Intelligent Video Compression'
-			style={{
-				fontSize: mobile ? '1.5em' : '1.7em',
-				fontWeight: 'normal',
-				marginTop: '10px',
-				marginBottom: '3em',
-				background: '#1c1b1c',
-				display: 'block'
-			}}
-		/>
-		<Button size='huge inverted download'>
-			成果展示
-		</Button>
-
-		<Button size='huge inverted basic'>
-			关于我们
-		</Button>
-
-	</Container>
-)
 
 const TopNav = ({fixed}) => (
 	<Segment
 		inverted
 		textAlign='center'
-		style={{minHeight: 700, padding: '1em 0em'}}
+		style={{padding: '1em 0em 4em'}}
 		vertical
 	>
 		<TopMenu fixed={fixed}/>
@@ -97,6 +56,8 @@ class DesktopContainer extends Component {
 		const {children} = this.props
 		const {fixed} = this.state
 
+		console.log(this.props)
+
 		return (
 			<Responsive getWidth={getWidth} minWidth={Responsive.onlyTablet.minWidth}>
 				<Visibility
@@ -109,12 +70,12 @@ class DesktopContainer extends Component {
 
 				{children}
 
-				<Segment inverted vertical style={{ padding: '5em 0em' }}>
+				<Segment inverted vertical style={{padding: '5em 0em'}}>
 					<Container>
 						<Grid divided inverted stackable>
 							<Grid.Row>
 								<Grid.Column width={3}>
-									<Header inverted as='h4' content='About' />
+									<Header inverted as='h4' content='About'/>
 									<List link inverted>
 										<List.Item as='a'>Sitemap</List.Item>
 										<List.Item as='a'>Contact Us</List.Item>
@@ -123,7 +84,7 @@ class DesktopContainer extends Component {
 									</List>
 								</Grid.Column>
 								<Grid.Column width={3}>
-									<Header inverted as='h4' content='Services' />
+									<Header inverted as='h4' content='Services'/>
 									<List link inverted>
 										<List.Item as='a'>Banana Pre-Order</List.Item>
 										<List.Item as='a'>DNA FAQ</List.Item>
@@ -173,21 +134,17 @@ class MobileContainer extends Component {
 					vertical
 					visible={sidebarOpened}
 				>
-					<Menu.Item as='a' active>
-						Home
-					</Menu.Item>
-					<Menu.Item as='a'>Work</Menu.Item>
-					<Menu.Item as='a'>Company</Menu.Item>
-					<Menu.Item as='a'>Careers</Menu.Item>
-					<Menu.Item as='a'>Log in</Menu.Item>
-					<Menu.Item as='a'>Sign Up</Menu.Item>
+					<Menu.Item as='a' active>主页</Menu.Item>
+					<Menu.Item as='a'>成果</Menu.Item>
+					<Menu.Item as='a'>联系我们</Menu.Item>
+					<Menu.Item as='a'>关于我们</Menu.Item>
 				</Sidebar>
 
 				<Sidebar.Pusher dimmed={sidebarOpened}>
 					<Segment
 						inverted
 						textAlign='center'
-						style={{minHeight: 350, padding: '1em 0em'}}
+						style={{ padding: '1em 0em'}}
 						vertical
 					>
 						<Container>
@@ -210,7 +167,6 @@ class MobileContainer extends Component {
 
 					{children}
 
-
 				</Sidebar.Pusher>
 			</Responsive>
 		)
@@ -225,14 +181,14 @@ const ResponsiveContainer = ({children}) => (
 )
 
 const App = () => (
-	<ResponsiveContainer classNam="g-home">
-		<Router>
-			<Switch>
-				<Route exact path="/" component={() => <Home/>} />
-				<Route exact path="/achievement" component={() => <Ache />} />
-			</Switch>
-		</Router>
-	</ResponsiveContainer>
+	<Router>
+		<Switch>
+			<ResponsiveContainer classNam="g-home">
+				<Route exact path="/" component={() => <Home/>}/>
+				<Route exact path="/achievement" component={() => <Ache/>}/>
+			</ResponsiveContainer>
+		</Switch>
+	</Router>
 )
 
 export default App

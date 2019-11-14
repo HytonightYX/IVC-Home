@@ -7,9 +7,9 @@ import {
 	Header,
 	Icon,
 	Image,
-	List,
 	Segment,
 } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 
 const Home = () => (
 	<div>
@@ -32,38 +32,13 @@ const Home = () => (
 
 				<Grid.Row>
 					<Grid.Column textAlign='center'>
-						<Button size='huge'>马上试试 <Icon name="arrow right" /></Button>
+						<Link to='achievement'>
+							<Button size='huge'>马上试试<Icon name="arrow right" /></Button>
+						</Link>
 					</Grid.Column>
 				</Grid.Row>
 			</Grid>
 		</Segment>
-
-		<Segment style={{ padding: '8em 0em' }} vertical>
-			<Grid container stackable verticalAlign='middle'>
-				<Grid.Row>
-					<Grid.Column width={8}>
-						<Header as='h3' style={{ fontSize: '2em' }}>
-							我们在做的...
-						</Header>
-						<p style={{ fontSize: '1.33em' }}>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae eius, ex fugit ipsa iste itaque molestiae omnis quaerat quam, quisquam, repellendus soluta tempora. Animi aperiam consequuntur impedit nisi quia. Qui?
-						</p>
-					</Grid.Column>
-
-					<Grid.Column floated='right' width={6}>
-						<Image bordered rounded size='large' src='https://picsum.photos/seed/picsum/150/150' />
-					</Grid.Column>
-				</Grid.Row>
-
-				<Grid.Row>
-					<Grid.Column textAlign='center'>
-						<Button size='huge'>马上试试 <Icon name="arrow right" /></Button>
-					</Grid.Column>
-				</Grid.Row>
-			</Grid>
-		</Segment>
-
-
 
 		<Segment style={{ padding: '0em' }} vertical>
 			<Grid celled='internally' columns='equal' stackable>
