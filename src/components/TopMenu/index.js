@@ -1,10 +1,10 @@
-import { Container, Menu } from 'semantic-ui-react'
-import IVC_LOGO from '../assert/IVC_LOGO.png'
 import React from 'react'
 import { Link, withRouter } from 'react-router-dom'
-import { MENU } from '../constant/config'
+import { Container, Menu } from 'semantic-ui-react'
+import IVC_LOGO from '../../assert/IVC_LOGO.png'
+import { MENU } from '../../constant/config'
 
-const TopNav = withRouter(({fixed, location}) => {
+const TopMenu = withRouter(({fixed, location}) => {
 
 	return (
 		<Menu
@@ -20,8 +20,8 @@ const TopNav = withRouter(({fixed, location}) => {
 				</Menu.Item>
 				{
 					MENU.map((item) => (
-						<Link to={item.path}>
-							<Menu.Item as='a' key={item.name} active={location.pathname === item.path}>
+						<Link to={item.path} key={item.name}>
+							<Menu.Item active={location.pathname === item.path}>
 								{item.name}
 							</Menu.Item>
 						</Link>
@@ -32,4 +32,4 @@ const TopNav = withRouter(({fixed, location}) => {
 	)
 })
 
-export default TopNav
+export default TopMenu
