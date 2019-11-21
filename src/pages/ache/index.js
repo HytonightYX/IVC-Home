@@ -77,7 +77,7 @@ class Achievement extends Component {
 									as="label"
 									className="m-upload-btn"
 								>
-									Upload
+									上传图片
 								</Button>
 
 								<input

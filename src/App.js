@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
 import {
-	Button,
 	Container,
-	Divider,
 	Grid,
 	Header,
-	Icon,
-	Image,
+	Icon, Image,
 	List,
 	Menu,
 	Responsive,
@@ -14,29 +11,29 @@ import {
 	Sidebar,
 	Visibility,
 } from 'semantic-ui-react'
-import { HashRouter as Router, Route, Switch, withRouter } from 'react-router-dom'
-
+import { HashRouter as Router, Link, Route, Switch, withRouter } from 'react-router-dom'
+import { MENU } from './constant/config'
 import 'semantic-ui-css/semantic.min.css'
 import './styles/global.less'
+import HomepageHeading from './components/HomepageHeading'
+import TopMenu from './components/TopMenu'
 
-import HomepageHeading from './components/HomePageHeading'
 import Home from './pages/home'
 import Ache from './pages/ache'
-
-import TopMenu from './components/TopNav'
+import IVC_LOGO from './assert/IVC_LOGO.png'
 
 const getWidth = () => {
 	const isSSR = typeof window === 'undefined'
-
 	return isSSR ? Responsive.onlyTablet.minWidth : window.innerWidth
 }
 
-
-const TopNav = ({fixed}) => (
+const TopNav = withRouter(({fixed, location}) => (
 	<Segment
 		inverted
 		textAlign='center'
-		style={{padding: '1em 0em 4em'}}
+		style={{
+			padding: `1em 0em ${location.pathname === '/' ? '4' : '0.2'}em`
+		}}
 		vertical
 	>
 		<TopMenu fixed={fixed}/>
@@ -44,7 +41,7 @@ const TopNav = ({fixed}) => (
 		<HomepageHeading/>
 
 	</Segment>
-)
+))
 
 class DesktopContainer extends Component {
 	state = {}
@@ -75,7 +72,7 @@ class DesktopContainer extends Component {
 						<Grid divided inverted stackable>
 							<Grid.Row>
 								<Grid.Column width={3}>
-									<Header inverted as='h4' content='About'/>
+									<Header inverted as='h4' content='About' style={{background: '#1c1b1c',}}/>
 									<List link inverted>
 										<List.Item as='a'>Sitemap</List.Item>
 										<List.Item as='a'>Contact Us</List.Item>
@@ -84,7 +81,7 @@ class DesktopContainer extends Component {
 									</List>
 								</Grid.Column>
 								<Grid.Column width={3}>
-									<Header inverted as='h4' content='Services'/>
+									<Header inverted as='h4' content='Services' style={{background: '#1c1b1c',}}/>
 									<List link inverted>
 										<List.Item as='a'>Banana Pre-Order</List.Item>
 										<List.Item as='a'>DNA FAQ</List.Item>
@@ -93,7 +90,7 @@ class DesktopContainer extends Component {
 									</List>
 								</Grid.Column>
 								<Grid.Column width={7}>
-									<Header as='h4' inverted>
+									<Header as='h4' inverted style={{background: '#1c1b1c',}}>
 										Footer Header
 									</Header>
 									<p>
@@ -119,7 +116,7 @@ class MobileContainer extends Component {
 	render() {
 		const {children} = this.props
 		const {sidebarOpened} = this.state
-
+		const {pathname} = this.props.location
 		return (
 			<Responsive
 				as={Sidebar.Pushable}
@@ -134,17 +131,22 @@ class MobileContainer extends Component {
 					vertical
 					visible={sidebarOpened}
 				>
-					<Menu.Item as='a' active>主页</Menu.Item>
-					<Menu.Item as='a'>成果</Menu.Item>
-					<Menu.Item as='a'>联系我们</Menu.Item>
-					<Menu.Item as='a'>关于我们</Menu.Item>
+					{
+						MENU.map((item) => (
+							<Link to={item.path} key={item.name}>
+								<Menu.Item active={pathname === item.path}>
+									{item.name}
+								</Menu.Item>
+							</Link>
+						))
+					}
 				</Sidebar>
 
 				<Sidebar.Pusher dimmed={sidebarOpened}>
 					<Segment
 						inverted
 						textAlign='center'
-						style={{ padding: '1em 0em'}}
+						style={{padding: '1em 0em'}}
 						vertical
 					>
 						<Container>
@@ -152,13 +154,8 @@ class MobileContainer extends Component {
 								<Menu.Item onClick={this.handleToggle}>
 									<Icon name='sidebar'/>
 								</Menu.Item>
-								<Menu.Item position='right'>
-									<Button as='a' inverted>
-										Log in
-									</Button>
-									<Button as='a' inverted style={{marginLeft: '0.5em'}}>
-										Sign Up
-									</Button>
+								<Menu.Item position='right' style={{padding: 0}}>
+									<Image src={IVC_LOGO} size='mini'/>
 								</Menu.Item>
 							</Menu>
 						</Container>
@@ -172,6 +169,8 @@ class MobileContainer extends Component {
 		)
 	}
 }
+
+MobileContainer = withRouter(MobileContainer)
 
 const ResponsiveContainer = ({children}) => (
 	<div>

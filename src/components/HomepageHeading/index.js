@@ -7,6 +7,7 @@ const HomepageHeading = withRouter(({mobile, location}) => {
 	const isHome = location.pathname === '/'
 
 	let marginTop
+	let paddingBottom
 
 	if (isHome) {
 		marginTop = mobile ? '1.5em' : '3em'
@@ -17,7 +18,7 @@ const HomepageHeading = withRouter(({mobile, location}) => {
 	return (
 		<Container text className="m-head">
 			{isHome ? (
-				<div>
+					<div>
 					<Header
 						as='h1'
 						inverted
@@ -27,7 +28,8 @@ const HomepageHeading = withRouter(({mobile, location}) => {
 							fontWeight: 'normal',
 							marginBottom: 0,
 							marginTop,
-							background: '#1c1b1c'
+							background: '#1c1b1c',
+							paddingBottom: 0
 						}}
 						className="team-name"
 					>智能视频编码课题组</Header>
@@ -46,7 +48,6 @@ const HomepageHeading = withRouter(({mobile, location}) => {
 							display: 'block'
 						}}
 					/>
-
 
 					<Button size={mobile ? 'large' : 'huge'} inverted download>
 						成果展示

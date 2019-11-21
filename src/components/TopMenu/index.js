@@ -15,7 +15,7 @@ const TopMenu = withRouter(({fixed, location}) => {
 			size='large'
 		>
 			<Container>
-				<Menu.Item position='left'>
+				<Menu.Item position='left m-logo'>
 					<img src={IVC_LOGO} alt=""/>
 				</Menu.Item>
 				{
