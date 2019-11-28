@@ -13,14 +13,14 @@ import {
 } from 'semantic-ui-react'
 import { HashRouter as Router, Link, Route, Switch, withRouter } from 'react-router-dom'
 import { MENU } from './constant/config'
-import 'semantic-ui-css/semantic.min.css'
-import './styles/global.less'
-import HomepageHeading from './components/HomepageHeading'
 import TopMenu from './components/TopMenu'
-
 import Home from './pages/home'
 import Ache from './pages/ache_back'
 import IVC_LOGO from './assert/IVC_LOGO.png'
+
+import 'semantic-ui-css/semantic.min.css'
+import './styles/global.less'
+import HomeCarousel from './components/HomeCarousel'
 
 const getWidth = () => {
 	const isSSR = typeof window === 'undefined'
@@ -29,17 +29,13 @@ const getWidth = () => {
 
 const TopNav = withRouter(({fixed, location}) => (
 	<Segment
-		inverted
 		textAlign='center'
 		style={{
-			padding: `1em 0em ${location.pathname === '/' ? '4' : '0.2'}em`
+			padding: 0
 		}}
 		vertical
 	>
 		<TopMenu fixed={fixed}/>
-
-		<HomepageHeading/>
-
 	</Segment>
 ))
 
@@ -159,7 +155,7 @@ class MobileContainer extends Component {
 								</Menu.Item>
 							</Menu>
 						</Container>
-						<HomepageHeading mobile/>
+						<HomeCarousel mobile/>
 					</Segment>
 
 					{children}
@@ -172,6 +168,7 @@ class MobileContainer extends Component {
 
 MobileContainer = withRouter(MobileContainer)
 
+
 const ResponsiveContainer = ({children}) => (
 	<div>
 		<DesktopContainer>{children}</DesktopContainer>
@@ -182,7 +179,7 @@ const ResponsiveContainer = ({children}) => (
 const App = () => (
 	<Router>
 		<Switch>
-			<ResponsiveContainer classNam="g-home">
+			<ResponsiveContainer>
 				<Route exact path="/" component={() => <Home/>}/>
 				<Route exact path="/achievement" component={() => <Ache/>}/>
 			</ResponsiveContainer>
