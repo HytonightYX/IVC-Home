@@ -1,5 +1,5 @@
-// export const BASE_URL = "http://192.168.123.118:9000"
-export const BASE_URL = "http://127.0.0.1:9000"
+// export const BASE_URL = "http://172.20.10.2:9000"
+export const BASE_URL = "http://ivc.natapp1.cc"
 
 export const API_URL  = BASE_URL +"/api"
 

@@ -15,7 +15,8 @@ import { HashRouter as Router, Link, Route, Switch, withRouter } from 'react-rou
 import { MENU } from './constant/config'
 import TopMenu from './components/TopMenu'
 import Home from './pages/home'
-import Ache from './pages/ache_back'
+import AcheVideo from './pages/ache_video'
+import AcheImage from './pages/ache_image'
 import IVC_LOGO from './assert/IVC_LOGO.png'
 
 import 'semantic-ui-css/semantic.min.css'
@@ -181,7 +182,8 @@ const App = () => (
 		<Switch>
 			<ResponsiveContainer>
 				<Route exact path="/" component={() => <Home/>}/>
-				<Route exact path="/achievement" component={() => <Ache/>}/>
+				<Route exact path="/ache-image" component={AcheImage}/>
+				<Route exact path="/ache-video" component={AcheVideo}/>
 			</ResponsiveContainer>
 		</Switch>
 	</Router>

@@ -5,17 +5,16 @@ import IVC_LOGO from '../../assert/IVC_LOGO.png'
 import { MENU } from '../../constant/config'
 
 const TopMenu = withRouter(({fixed, location}) => {
-
 	return (
 		<Menu
-			fixed={fixed ? 'top' : null}
-			inverted={!fixed}
+			inverted
 			pointing={!fixed}
 			secondary={!fixed}
 			size='large'
+			style={{background: '#1c1b1c', padding: '5px'}}
 		>
 			<Container>
-				<Menu.Item position='left m-logo'>
+				<Menu.Item position='left' className="m-logo">
 					<img src={IVC_LOGO} alt=""/>
 				</Menu.Item>
 				{
