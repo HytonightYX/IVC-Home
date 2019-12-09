@@ -2,6 +2,97 @@
 
 
 .g-home {
+
+  .m-wedo {
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin: 100px auto 100px;
+      padding: 16px;
+      max-width: 1120px;
+      height: 400px;
+
+      .title {
+        color: rgb(16, 17, 49);
+        font-size: 3.5rem;
+        line-height: 1.27565;
+        font-weight: 700;
+        text-align: center;
+      }
+
+      .intro {
+        color: rgb(87, 88, 110);
+        font-size: 1.5rem;
+        line-height: 1.51368;
+        margin-bottom: 60px;
+      }
+
+      .m-btn-row {
+        margin-bottom: 60px;
+
+        a {
+          align-self: center;
+          font-size: 20px;
+          font-weight: 700;
+          line-height: 20px;
+          color: #425066;
+          display: inline-block;
+          margin-top: 8px;
+          position: relative;
+        }
+
+        a:hover {
+          color: #425066;
+        }
+      }
+
+      .card-wrapper {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+
+        .card {
+          flex-basis: calc(100% / 3 - 10px);
+
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          //border: 2px solid #364d79;
+          margin: 30px;
+          padding: 15px;
+          background: #ffffff;
+          border-radius: 10px;
+
+          box-shadow: 0 0 36px rgba(0,0,0,0.1);
+          transition: border-color .2s linear;
+
+          .card-title {
+            font-size: 20px;
+            font-weight: 500;
+            line-height: 26px;
+            margin-bottom: 16px;
+          }
+
+          .card-content {
+            font-size: 16px;
+            line-height: 26px;
+            color: rgb(87, 88, 110);
+          }
+        }
+
+        .card:focus {
+          outline: -webkit-focus-ring-color auto 5px;
+        }
+      }
+
+
+    }
+  }
+
+
+
   .following.bar {
     position: fixed;
     top: 0;
@@ -13,4 +104,12 @@
     border-bottom: 1px solid transparent;
     transition: padding 0.5s ease, background 0.5s ease, box-shadow 0.5s ease, border 0.5s ease;
   }
+}
+
+.m-popover__home {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 32px;
+  height: 32px;
+  vertical-align: center;
 }

@@ -7,5 +7,8 @@ export const MENU = [
 
 export const PROC_TYPE = [
 	{key: 'Vid4', value: 'Vid4', text: 'Vid4'},
-	{key: 'Vid3', value: 'Vid3', text: 'Vid3'},
+	{key: 'sharp_bicubic', value: 'sharp_bicubic', text: 'sharp_bicubic'},
+	{key: 'blur_bicubic', value: 'blur_bicubic', text: 'blur_bicubic'},
+	{key: 'blur', value: 'blur', text: 'blur'},
+	{key: 'blur_comp', value: 'blur_comp', text: 'blur_comp'},
 ]

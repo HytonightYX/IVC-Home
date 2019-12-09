@@ -13,19 +13,22 @@ import './style.less'
 import { PROC_TYPE } from '../../constant/config'
 
 const VIDEO_STATUS = {
-	before: 0, uploading: 1,  processing: 2, done: 3
+	before: 0, uploading: 1, processing: 2, done: 3
 }
 
 class Achievement extends Component {
 
-	state = {
-		videoUrl: null,
-		videoRespUrl: null,
-		videoType: null,
-		videoStatus: VIDEO_STATUS.before,
+	constructor(props) {
+		super(props)
+		this.state = {
+			videoUrl: null,
+			videoRespUrl: null,
+			videoType: null,
+			videoStatus: VIDEO_STATUS.before,
 
-		videoPause: true,
-		videoProcType: 'Vid4'
+			videoPause: true,
+			videoProcType: 'Vid4'
+		}
 	}
 
 	fileChange = async (e) => {
@@ -46,8 +49,8 @@ class Achievement extends Component {
 						videoRespUrl: path.replace('uploads', 'resp'),
 						videoStatus: VIDEO_STATUS.done
 					})
-					this.playerLeft.load();
-					this.playerRight.load();
+					this.playerLeft.load()
+					this.playerRight.load()
 				}
 			})
 		}
@@ -64,6 +67,12 @@ class Achievement extends Component {
 		console.log('playerLeft', this.playerLeft.getState())
 		this.playerLeft.pause()
 		this.playerRight.pause()
+	}
+
+	restart = () => {
+		this.setState({videoPause: true})
+		this.playerLeft.load()
+		this.playerRight.load()
 	}
 
 	handleSelect = (e, {value}) => {
@@ -94,7 +103,8 @@ class Achievement extends Component {
 									<ControlBar autoHide={true} disableDefaultControls={true}>
 										<ProgressControl/>
 									</ControlBar>
-									<source src={videoUrl ? `${BASE_URL}/${videoUrl}` : "https://media.w3.org/2010/05/sintel/trailer_hd.mp4"}/>
+									<source
+										src={videoUrl ? `${BASE_URL}/${videoUrl}` : 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4'}/>
 								</Player>
 
 								<input hidden type='file' id='input-control-id' onChange={this.fileChange}/>
@@ -115,11 +125,12 @@ class Achievement extends Component {
 									<ControlBar autoHide={true} disableDefaultControls={true}>
 										<ProgressControl/>
 									</ControlBar>
-									<source src={videoRespUrl ? `${BASE_URL}/${videoRespUrl}` : "https://media.w3.org/2010/05/sintel/trailer_hd.mp4"}/>
+									<source
+										src={videoRespUrl ? `${BASE_URL}/${videoRespUrl}` : 'https://media.w3.org/2010/05/sintel/trailer_hd.mp4'}/>
 								</Player>
 							</Grid.Column>
 						</Grid.Row>
-						<Segment style={{margin: '0 auto', width: '400px'}}>
+						<Segment style={{margin: '0 auto 40px', width: '400px'}}>
 							<Form.Select
 								fluid
 								options={PROC_TYPE}
@@ -127,11 +138,16 @@ class Achievement extends Component {
 								onChange={this.handleSelect}
 							/>
 							<Button fluid htmlFor='input-control-id' as="label" className="m-upload-btn">上传视频</Button>
+							<Button.Group fluid>
+								<Button icon='backward'/>
+								{videoPause &&
+								<Button as="label" className="m-upload-btn" onClick={this.play}><Icon name='play'/></Button>}
+								{!videoPause &&
+								<Button as="label" className="m-upload-btn" onClick={this.pause}><Icon name='pause'/></Button>}
+								<Button icon='redo' onClick={this.restart}/>
+								<Button icon='forward'/>
+							</Button.Group>
 
-							{videoPause &&
-							<Button fluid as="label" className="m-upload-btn" onClick={this.play}><Icon name='play'/></Button>}
-							{!videoPause &&
-							<Button fluid as="label" className="m-upload-btn" onClick={this.pause}><Icon name='pause'/></Button>}
 						</Segment>
 					</Grid>
 				</Segment>
