@@ -24,7 +24,7 @@ const Home = withRouter(({location}) => {
 				<div className="content">
 
 					<div className="intro">
-						课题组主要的研究方向围绕视频图像编码与处理展开，结合最先进的机器学习与深度神经网络技术，或提升主客观质量或降低复杂度。课题组承担了国家重大专项子课题、省自然基金等系列课题，与美国Google，国内海康、阿里等企业有紧密合作，并与国内外高校深度交流，力在培养视频编码领域的优秀人才。
+						针对视频图像编码与处理，结合机器学习与深度神经网络技术，进行算法设计与优化，达到提升视频压缩效率、提升视频客观质量或降低实现复杂度的目的。
 					</div>
 
 					<div className="m-btn-row">
@@ -83,20 +83,15 @@ const Home = withRouter(({location}) => {
 					<Button as='a' size='large'>
 						更多动态
 					</Button>
-					<Divider
-						as='h4'
-						className='header'
-						horizontal
-						style={{margin: '3em 0em', textTransform: 'uppercase'}}
-					>
-						<a href='#'>lorem ipsum</a>
-					</Divider>
+
+					<Divider />
+
 					<Header as='h3' style={{fontSize: '2em'}}>
 						联系我们
 					</Header>
 
-					<p>地址: XXX</p>
-					<p>联系方式: XXXXXXXXX</p>
+					<p>地址: 杭州师范大学仓前校区勤园 11 号楼 506</p>
+					<p>联系方式: + 571 28868320</p>
 
 					<Button as='a' size='large'>
 						加入我们
