@@ -2,6 +2,8 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const compression = require('compression')
+const formidable = require('formidable')
+const shortuuid = require('short-uuid')
 const app = express()
 const port = 7000
 
@@ -44,5 +46,32 @@ app.get('/member', async (req, res) => {
 		res.status(200).json({code: -1, data: {}, msg: e.message})
 	}
 })
+
+/**
+ * 图片上传接口
+ * @return 图片 uuid 值
+ * @description
+ * 返回的 uuid 值存到 post 表中的 image 字段里。
+ * 访问服务器地址 (BASE_URL) + '/static/image/[uuid].[type]' 即可拿到图片
+ */
+app.post('/imgUpload', async (req, res) => {
+	const form = new formidable.IncomingForm()
+	const uuid = shortuuid.generate()
+	form.parse(req)
+
+	form.on('fileBegin', function (name, file) {
+		const type = file.name.split('.').slice(-1)
+		file.path = 'static/image/' + `${uuid}.${type}`
+	})
+
+	form.on('file', () => {
+		res.status(200).json({
+			code: 200,
+			msg: '上传图片成功',
+			data: {uuid: uuid}
+		})
+	})
+})
+
 
 app.listen(port, () => console.log(`> Running on localhost:${port}`))
