@@ -29,7 +29,7 @@ app.post('/login', async (req, res) => {
 	const {username, password} = req.body
 	try {
 		const user = await userLogin(username, password)
-		res.status(200).json({code: 200, data: user, msg: '获取到用户信息'})
+		res.status(200).json({code: 200, data: {username: user.username}, msg: '获取到用户信息'})
 	} catch (e) {
 		res.status(200).json({code: -1, data: {}, msg: e.message})
 	}
@@ -50,9 +50,8 @@ app.get('/member', async (req, res) => {
 /**
  * 图片上传接口
  * @return 图片 uuid 值
- * @description
- * 返回的 uuid 值存到 post 表中的 image 字段里。
- * 访问服务器地址 (BASE_URL) + '/static/image/[uuid].[type]' 即可拿到图片
+ * @description 返回的 uuid 值存到 post 表中的 image 字段里。
+ *  访问服务器地址 (BASE_URL) + '/static/image/[uuid].[type]' 即可拿到图片
  */
 app.post('/imgUpload', async (req, res) => {
 	const form = new formidable.IncomingForm()
