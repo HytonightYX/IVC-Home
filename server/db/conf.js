@@ -1,11 +1,11 @@
 const conf = {
 	host: '101.37.14.191',
-	port: 3306,
-	database: 'library',
-	user: 'libadmin',
+	user: 'ivcuser',
+	database: 'ivc',
 	password: require('../secret').mysql_secret,
-	multipleStatements: true,
-	secret: require('../secret').mysql_secret,
+	waitForConnections: true,
+	connectionLimit: 10,
+	queueLimit: 0
 }
 
 module.exports = conf
