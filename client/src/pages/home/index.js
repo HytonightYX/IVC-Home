@@ -3,10 +3,8 @@ import {
 	Button,
 	Container,
 	Divider,
-	Grid,
 	Header,
 	Icon,
-	Image, Popup,
 	Segment,
 } from 'semantic-ui-react'
 import { Link, withRouter } from 'react-router-dom'
@@ -103,26 +101,3 @@ const Home = withRouter(({location}) => {
 })
 
 export default Home
-
-const ba1 = () => (
-	<Segment style={{padding: '0em'}} vertical>
-		<Grid celled='internally' columns='equal' stackable>
-			<Grid.Row textAlign='center'>
-				<Grid.Column style={{paddingBottom: '5em', paddingTop: '5em'}}>
-					<Header as='h3' style={{fontSize: '2em'}} icon>
-						"What a Team"
-					</Header>
-					<p style={{fontSize: '1.33em'}}>That is what they all say about us</p>
-				</Grid.Column>
-				<Grid.Column style={{paddingBottom: '5em', paddingTop: '5em'}} icon>
-					<Header as='h3' style={{fontSize: '2em'}} icon>
-						"Lorem ipsum dolor!!!"
-					</Header>
-					<p style={{fontSize: '1.33em'}}>
-						<b>Nan</b> Chief Fun Officer Acme Toys
-					</p>
-				</Grid.Column>
-			</Grid.Row>
-		</Grid>
-	</Segment>
-)
