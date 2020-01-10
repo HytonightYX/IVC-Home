@@ -1,40 +1,34 @@
 import React from 'react'
-import { Form, Radio, Table, Input, Button, Skeleton, Modal, Tag, Divider, message, Card, Row, Col, Select, DatePicker, Drawer, Spin, Icon } from 'antd'
+import { Form, Radio, Table, Input, Button, Modal, Tag, Select, Spin, Icon } from 'antd'
 import { inject, observer } from 'mobx-react'
-import axios from 'axios'
-
-const {RangePicker} = DatePicker
 
 import './index.less'
-import books from '../../constant/books'
 
 @inject('userStore')
 @observer
 @Form.create()
-class Overdue extends React.Component {
+class Member extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			loading: false,
 			search: false,
-			visAddUser: false
+			visAddUser: false,
+			members: []
 		}
 	}
 
-	componentDidMount() {
-		this.setState({loading: true}, () => {
-			axios.get('https://5ddb2a5f041ac10014de0c6f.mockapi.io/user')
-				.then((r) => {
-					console.log(r.data)
-					this.setState({user_list: r.data, loading: false})
-				})
-				.catch((e) => message.error('网络错误'))
-				.finally(() => this.setState({loading: false}))
+	async componentDidMount() {
+		this.setState({loading: true})
+		const members = await this.props.userStore.listMember()
+		this.setState({
+			loading: false,
+			members
 		})
 	}
 
 	render() {
-		const {user_list, loading} = this.state
+		const {members, loading} = this.state
 		const {getFieldDecorator} = this.props.form
 		const formItemLayout = {
 			labelCol: {span: 5},
@@ -42,28 +36,21 @@ class Overdue extends React.Component {
 		}
 		const columns = [
 			{
-				title: '用户卡号',
-				dataIndex: 'card',
-			}, {
-				title: '用户名',
-				dataIndex: 'username',
-			}, {
 				title: '姓名',
 				dataIndex: 'name',
+				width: 150
 			}, {
-				title: '邮箱',
-				dataIndex: 'email',
+				title: '标签',
+				dataIndex: 'tag',
+				render: (text) => <Tag color="#108ee9">{text}</Tag>
 			}, {
-				title: '手机',
-				dataIndex: 'phone',
-				render: p => '18043211234'
-			}, {
-				title: '状态',
-				dataIndex: 'status',
-				render: t => <Tag color="#108ee9">正常</Tag>
+				title: '简介',
+				dataIndex: 'bio',
+				render: (text) => <span className="col-bio">{text}</span>,
 			}, {
 				title: '功能',
 				key: 'action',
+				width: 120,
 				render: (text, record) => (
 					<div className="m-fun">
 						<Button type='primary' size='small' className="m-blue">修改</Button>
@@ -76,37 +63,15 @@ class Overdue extends React.Component {
 		return (
 			<div className='g-content-sub'>
 				<div className="m-userlist">
-					<Button type="primary" style={{marginBottom: 16}} onClick={() => this.setState({visAddUser: true})}><Icon type="user-add"/>添加用户</Button>
-					<Card>
-						<Form layout="inline">
-							<Form.Item label="用户卡号">
-								<Input/>
-							</Form.Item>
-							<Form.Item label="用户名">
-								<Input/>
-							</Form.Item>
-							<Form.Item label="邮箱">
-								<Input/>
-							</Form.Item>
-							<Form.Item label="姓名">
-								<Input/>
-							</Form.Item>
-							<Form.Item>
-								<Button type="primary">
-									搜索
-								</Button>
-								<Button style={{marginLeft: 8}} onClick={this.handleReset}>
-									重置
-								</Button>
-							</Form.Item>
-						</Form>
-					</Card>
+					<Button type="primary" style={{marginBottom: 16}} onClick={() => this.setState({visAddUser: true})}><Icon
+						type="user-add"/>添加用户</Button>
+
 					<Spin
 						tip="加载中"
 						spinning={loading}
 						indicator={<Icon type="loading" style={{fontSize: 24}} spin/>}
 					>
-						<Table size='small' dataSource={user_list} columns={columns} rowKey={item => item.id}/>
+						<Table size='small' dataSource={members} columns={columns} rowKey={item => item.id}/>
 					</Spin>
 				</div>
 
@@ -114,7 +79,9 @@ class Overdue extends React.Component {
 					title="创建用户"
 					visible={this.state.visAddUser}
 					onOk={() => this.setState({visAddUser: false})}
-					onCancel={() => {this.setState({visAddUser: false})}}
+					onCancel={() => {
+						this.setState({visAddUser: false})
+					}}
 				>
 					<Form layout="horizontal">
 						<Form.Item label="用户名" {...formItemLayout}>
@@ -183,4 +150,4 @@ class Overdue extends React.Component {
 	}
 }
 
-export default Overdue
+export default Member
