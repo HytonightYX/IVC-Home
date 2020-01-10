@@ -2,6 +2,7 @@ const {
 	override,
 	fixBabelImports,
 	addLessLoader,
+	addDecoratorsLegacy
 } = require('customize-cra')
 
 module.exports = override(
@@ -15,4 +16,5 @@ module.exports = override(
 		// modifyVars: {'@primary-color': '#e6f7ff'},
 		// modifyVars: {'@primary-color': '#f9c700'},
 	}),
+	addDecoratorsLegacy()
 )

@@ -40,4 +40,3 @@ export const IVC_MEMBER = [
 	{name: '吴辰龙', grade: '本科生', image: '', description: '我叫吴辰龙，来自计算机184，喜欢打打篮球，我就是最低水平。'},
 	{name: '吴治佑', grade: '本科生', image: '', description: '我是coding时长一年半的00后程序员，性格随和，爱浪，但责任心强，学习认真，热衷于人工智能，想要new一个对象。 '}
 	]
-

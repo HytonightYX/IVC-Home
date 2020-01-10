@@ -2,6 +2,9 @@
 export const BASE_URL = "http://ivc.natapp1.cc"
 
 export const API_URL  = BASE_URL +"/api"
+export const API_SERVER  = 'http://localhost:7000'
 
 export const API_UPLOAD   = API_URL + '/upload'
 export const API_CHECK    = API_URL + '/done'
+
+export const API_MEMBER_LIST    = API_SERVER + '/member'
