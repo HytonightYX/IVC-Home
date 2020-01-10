@@ -1,11 +1,11 @@
 import { observable, action, runInAction } from 'mobx'
 import axios from 'axios'
-import * as urls from '@constant/urls'
+import * as urls from '../constant/urls'
 import { message } from 'antd'
 
 class User {
 	@observable
-	// currUser = null
+		// currUser = null
 	currUser = {
 		username: 'HytonightYX',
 		name: '张三'
@@ -30,6 +30,19 @@ class User {
 	@action.bound
 	logout() {
 		this.currUser = null
+	}
+
+	@action
+	async listMember() {
+		try {
+			const r = await axios.get(urls.API_MEMBER_LIST)
+			console.log(r)
+			if (r && r.status === 200) {
+				return r.data.data
+			}
+		} catch (e) {
+			message.error('网络错误')
+		}
 	}
 }
 
