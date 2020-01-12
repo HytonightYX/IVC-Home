@@ -7,7 +7,7 @@ const shortuuid = require('short-uuid')
 const app = express()
 const port = 7000
 
-const {userLogin, memberList} = require('./db/func')
+const {userLogin, memberList, memberEdit} = require('./db/func')
 
 app.use(compression())
 app.use(cors())
@@ -42,6 +42,20 @@ app.get('/member', async (req, res) => {
 	try {
 		const list = await memberList()
 		res.status(200).json({code: 200, data: list, msg: '获取到用户信息'})
+	} catch (e) {
+		res.status(200).json({code: -1, data: {}, msg: e.message})
+	}
+})
+
+/**
+ * 修改人员信息接口
+ */
+app.post('/member/edit', async (req, res) => {
+	const params = req.body
+	console.log('收到参数', params)
+	try {
+		const list = await memberEdit(params)
+		res.status(200).json({code: 200, data: list, msg: '修改成功'})
 	} catch (e) {
 		res.status(200).json({code: -1, data: {}, msg: e.message})
 	}

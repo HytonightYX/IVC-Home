@@ -12,8 +12,8 @@ async function findUser(username) {
 }
 
 async function findMemberAll() {
-  const result = await pool.query('SELECT * FROM member')
-  return result[0] || []
+	const result = await pool.query('SELECT * FROM member')
+	return result[0] || []
 }
 
 /* ===== 下面为业务层代码 ===== */
@@ -25,8 +25,8 @@ const userLogin = async (username, password) => {
 	if (userInDB.password === password) {
 		return userInDB
 	} else {
-	  throw new Error('密码错误')
-  }
+		throw new Error('密码错误')
+	}
 }
 
 /**
@@ -34,10 +34,18 @@ const userLogin = async (username, password) => {
  * @return {Promise<*>}
  */
 const memberList = async () => {
-  return await findMemberAll()
+	return await findMemberAll()
+}
+
+const memberEdit = async (params) => {
+	let setSQL = Object.keys(params).map(item => `${item}="${params[item]}"`)
+	let sql = `UPDATE member SET ${setSQL} WHERE id=${params.id}`
+	const [rows, fields] = await pool.query(sql)
+	console.log(rows)
 }
 
 module.exports = {
 	userLogin,
-  memberList
+	memberList,
+	memberEdit
 }

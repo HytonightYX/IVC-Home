@@ -1,8 +1,21 @@
 import React from 'react'
-import { Form, Radio, Table, Input, Button, Modal, Tag, Select, Spin, Icon } from 'antd'
+import { Form, Radio, Table, Input, Button, Modal, Tag, Select, Spin, Icon, Upload, message } from 'antd'
+import { API_IMAGE_UPLOAD, API_STATIC_IMAGE } from '../../constant/urls'
 import { inject, observer } from 'mobx-react'
 
 import './index.less'
+
+function beforeUpload(file) {
+	const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
+	if (!isJpgOrPng) {
+		message.error('You can only upload JPG/PNG file!')
+	}
+	const isLt2M = file.size / 1024 / 1024 < 2
+	if (!isLt2M) {
+		message.error('Image must smaller than 2MB!')
+	}
+	return isJpgOrPng && isLt2M
+}
 
 @inject('userStore')
 @observer
@@ -12,9 +25,14 @@ class Member extends React.Component {
 		super(props)
 		this.state = {
 			loading: false,
+			uploading: false,
 			search: false,
 			visAddUser: false,
-			members: []
+			visEditUser: false,
+			image: null,
+			imageType: 'png',
+			members: [],
+			submitting: false
 		}
 	}
 
@@ -27,13 +45,67 @@ class Member extends React.Component {
 		})
 	}
 
-	render() {
-		const {members, loading} = this.state
-		const {getFieldDecorator} = this.props.form
-		const formItemLayout = {
-			labelCol: {span: 5},
-			wrapperCol: {span: 16}
+	handleUploadChange = info => {
+		if (info.file.status === 'uploading') {
+			this.setState({uploading: true})
+			return
 		}
+		if (info.file.status === 'done') {
+			const r = info.file.response
+
+			if (r && r.code === 200) {
+				message.success(r.msg, 0.7)
+				this.setState({
+					uploading: false,
+					image: r.data.uuid,
+					imageType: info.file.type.split('/')[1]
+				})
+				this.props.form.setFieldsValue({
+					image: r.data.uuid
+				})
+			}
+		}
+	}
+
+	handleEdit = (record) => {
+		this.setState({
+			visEditUser: true,
+			select: record,
+			image: record.image || null
+		})
+	}
+
+	handleSubmitEdit = () => {
+		this.setState({submitting: true})
+		this.props.form.validateFields(((errors, values) => {
+			if (errors) {
+				return
+			}
+			values.id = this.state.select.id
+			this.props.userStore.editMember(values)
+				.then((data) => {
+					this.setState({
+						submitting: false,
+						visEditUser: false
+					})
+					console.log(data)
+					if (data.code === 200) {
+						message.success(data.msg, 0.7)
+					}
+				})
+		}))
+	}
+
+	render() {
+		const {members, loading, image, imageType, select, submitting} = this.state
+		const {getFieldDecorator} = this.props.form
+		const uploadButton = (
+			<div>
+				<Icon type={this.state.loading ? 'loading' : 'plus'}/>
+				<div className="ant-upload-text">Upload</div>
+			</div>
+		)
+
 		const columns = [
 			{
 				title: '姓名',
@@ -53,7 +125,7 @@ class Member extends React.Component {
 				width: 120,
 				render: (text, record) => (
 					<div className="m-fun">
-						<Button type='primary' size='small' className="m-blue">修改</Button>
+						<Button type='primary' size='small' className="m-blue" onClick={() => this.handleEdit(record)}>修改</Button>
 						<Button type='danger' size='small' className="m-blue">删除</Button>
 					</div>
 				),
@@ -76,72 +148,76 @@ class Member extends React.Component {
 				</div>
 
 				<Modal
-					title="创建用户"
-					visible={this.state.visAddUser}
-					onOk={() => this.setState({visAddUser: false})}
+					title="修改用户"
+					visible={this.state.visEditUser}
+					onOk={this.handleSubmitEdit}
+					confirmLoading={submitting}
 					onCancel={() => {
-						this.setState({visAddUser: false})
+						this.setState({visEditUser: false})
 					}}
+					destroyOnClose={true}
 				>
-					<Form layout="horizontal">
-						<Form.Item label="用户名" {...formItemLayout}>
-							{
-								getFieldDecorator('username', {
-									initialValue: ''
-								})(
-									<Input type="text" placeholder="请输入用户名..."/>
-								)
-							}
-						</Form.Item>
-						<Form.Item label="姓名" {...formItemLayout}>
+					<Form layout='horizontal' className='g-brad-form'>
+						<Form.Item label='姓名'>
 							{
 								getFieldDecorator('name', {
-									initialValue: ''
+									rules: [{required: true, message: '请输入人员姓名！'}],
+									initialValue: select && select.name
 								})(
-									<Input type="text" placeholder="请输入姓名..."/>
+									<Input
+										prefix={<Icon type="database" style={{color: 'rgba(0,0,0,.25)'}}/>}
+										placeholder="请填写名称..."
+									/>
 								)
 							}
 						</Form.Item>
-						<Form.Item label="邮箱" {...formItemLayout}>
+
+						<Form.Item label='标签'>
 							{
-								getFieldDecorator('email', {
-									initialValue: ''
+								getFieldDecorator('tag', {
+									rules: [{required: true, message: '请设定标签！'}],
+									initialValue: select && select.tag
 								})(
-									<Input type="text" placeholder="请输入邮箱..."/>
+									<Input
+										placeholder="请设定标签"
+									/>
 								)
 							}
 						</Form.Item>
-						<Form.Item label="手机" {...formItemLayout}>
+
+						<Form.Item label='图片'>
 							{
-								getFieldDecorator('phone', {
-									initialValue: ''
-								})(
-									<Input type="text" placeholder="请输入手机..."/>
+								getFieldDecorator('image', {})(
+									<div className='upload-wrap'>
+										<Upload
+											name="file"
+											listType="picture-card"
+											className="avatar-uploader"
+											showUploadList={false}
+											action={API_IMAGE_UPLOAD}
+											beforeUpload={beforeUpload}
+											onChange={this.handleUploadChange}
+										>
+											{image ?
+												<img src={`${API_STATIC_IMAGE}/${image}.${imageType}`} alt="icon"
+												     style={{maxHeight: 64}}/> : uploadButton}
+										</Upload>
+									</div>
 								)
 							}
 						</Form.Item>
-						<Form.Item label="性别" {...formItemLayout}>
+
+						<Form.Item label='个人简介'>
 							{
-								getFieldDecorator('sex', {
-									initialValue: '',
+								getFieldDecorator('bio', {
+									initialValue: select && select.bio
 								})(
-									<Radio.Group onChange={this.onChange} value={this.state.value}>
-										<Radio value={1}>男</Radio>
-										<Radio value={2}>女</Radio>
-									</Radio.Group>
+									<Input.TextArea
+										autoSize={{minRows: 2}}
+										placeholder="请填写简介..."
+									/>
 								)
 							}
-						</Form.Item>
-						<Form.Item label="状态" {...formItemLayout}>
-							{
-								getFieldDecorator('state', {
-									initialValue: 1
-								})(
-									<Select>
-										<Select.Option value={1}>开启</Select.Option>
-										<Select.Option value={0}>关闭</Select.Option>
-									</Select>
-								)}
 						</Form.Item>
 					</Form>
 				</Modal>

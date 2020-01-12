@@ -44,6 +44,18 @@ class User {
 			message.error('网络错误')
 		}
 	}
+
+	@action
+	async editMember(params) {
+		try {
+			const r = await axios.post(urls.API_MEMBER_EDIT, params)
+			if (r && r.status === 200) {
+				return r.data
+			}
+		} catch (e) {
+			message.error('网络错误')
+		}
+	}
 }
 
 export default new User()
