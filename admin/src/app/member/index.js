@@ -86,7 +86,8 @@ class Member extends React.Component {
 				.then((data) => {
 					this.setState({
 						submitting: false,
-						visEditUser: false
+						visEditUser: false,
+						members: data.data
 					})
 					console.log(data)
 					if (data.code === 200) {

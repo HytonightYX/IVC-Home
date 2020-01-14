@@ -5,11 +5,13 @@ import { message } from 'antd'
 
 class User {
 	@observable
-		// currUser = null
 	currUser = {
 		username: 'HytonightYX',
 		name: '张三'
 	}
+
+	@observable
+	memberList = []
 
 	@action
 	async login(params) {

@@ -54,7 +54,8 @@ app.post('/member/edit', async (req, res) => {
 	const params = req.body
 	console.log('收到参数', params)
 	try {
-		const list = await memberEdit(params)
+		await memberEdit(params)
+		const list = await memberList()
 		res.status(200).json({code: 200, data: list, msg: '修改成功'})
 	} catch (e) {
 		res.status(200).json({code: -1, data: {}, msg: e.message})
