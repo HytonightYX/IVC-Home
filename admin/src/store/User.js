@@ -6,8 +6,7 @@ import { message } from 'antd'
 class User {
 	@observable
 	currUser = {
-		username: 'HytonightYX',
-		name: '张三'
+		username: 'HytonightYX'
 	}
 
 	@observable
@@ -17,11 +16,11 @@ class User {
 	async login(params) {
 		const r = await axios.post(urls.API_USER_LOGIN, params)
 		if (r && r.status === 200) {
-			const data = r.data.data
-			if (data && params.password === data.password) {
+			const data = r.data
+			if (data && data.code === 200) {
 				message.success('登录成功', 0.7)
 				runInAction(() => {
-					this.currUser = r.data.data
+					this.currUser = data.data
 				})
 			} else {
 				message.error('账户名或密码错误')
