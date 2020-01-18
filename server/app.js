@@ -7,7 +7,7 @@ const shortuuid = require('short-uuid')
 const app = express()
 const port = 7000
 
-const {userLogin, memberList, memberEdit} = require('./db/func')
+const {userLogin, memberList, memberEdit, postListSimple, postEdit} = require('./db/func')
 
 app.use(compression())
 app.use(cors())
@@ -57,6 +57,18 @@ app.post('/member/edit', async (req, res) => {
 		await memberEdit(params)
 		const list = await memberList()
 		res.status(200).json({code: 200, data: list, msg: '修改成功'})
+	} catch (e) {
+		res.status(200).json({code: -1, data: {}, msg: e.message})
+	}
+})
+
+/**
+ * 获取所有文章信息
+ */
+app.get('/post/simple', async (req, res) => {
+	try {
+		const list = await postListSimple()
+		res.status(200).json({code: 200, data: list, msg: '拉取文章列表'})
 	} catch (e) {
 		res.status(200).json({code: -1, data: {}, msg: e.message})
 	}

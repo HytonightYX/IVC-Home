@@ -2,7 +2,6 @@ const mysql = require('mysql2/promise')
 const config = require('./conf.js')
 const pool = mysql.createPool(config)
 
-
 async function findUser(username) {
 	const result = await pool.query('SELECT * FROM user WHERE username = ?', [username])
 	if (result[0].length < 1) {
@@ -31,21 +30,38 @@ const userLogin = async (username, password) => {
 
 /**
  * 获取所有成员信息
- * @return {Promise<*>}
  */
 const memberList = async () => {
 	return await findMemberAll()
 }
 
+/**
+ * 更新用户信息
+ * @param params 需更新的列表
+ */
 const memberEdit = async (params) => {
-	let setSQL = Object.keys(params).map(item => `${item}="${params[item]}"`)
-	let sql = `UPDATE member SET ${setSQL} WHERE id=${params.id}`
-	const [rows, fields] = await pool.query(sql)
-	console.log(rows)
+	const setSQL = Object.keys(params).map(item => `${item}="${params[item]}"`)
+	const sql = `UPDATE member SET ${setSQL} WHERE id=${params.id}`
+	await pool.query(sql)
+}
+
+/**
+ * 获取所有成员信息缩略信息
+ * 用于首页展示（去掉多余的文章详情）
+ */
+const postListSimple = async () => {
+	const [rows, fields] = await pool.query(`SELECT id, title, cover, create_time, status FROM post`)
+	return rows || []
+}
+
+const postEdit = () => {
+
 }
 
 module.exports = {
 	userLogin,
 	memberList,
-	memberEdit
+	memberEdit,
+	postListSimple,
+	postEdit
 }
