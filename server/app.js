@@ -76,17 +76,18 @@ app.get('/post/simple', async (req, res) => {
 
 /**
  * 图片上传接口
- * @return 图片 uuid 值
- * @description 返回的 uuid 值存到 post 表中的 image 字段里。
+ * @return uuid(图片uuid) 和 type(文件后缀)
+ * @description 返回的 uuid 存到 post 表中的 image 字段里。
  *  访问服务器地址 (BASE_URL) + '/static/image/[uuid].[type]' 即可拿到图片
  */
 app.post('/imgUpload', async (req, res) => {
 	const form = new formidable.IncomingForm()
 	const uuid = shortuuid.generate()
+	let type
 	form.parse(req)
 
 	form.on('fileBegin', function (name, file) {
-		const type = file.name.split('.').slice(-1)
+		type = file.name.split('.').slice(-1)
 		file.path = 'static/image/' + `${uuid}.${type}`
 	})
 
@@ -94,7 +95,10 @@ app.post('/imgUpload', async (req, res) => {
 		res.status(200).json({
 			code: 200,
 			msg: '上传图片成功',
-			data: {uuid: uuid}
+			data: {
+				uuid: uuid,
+				type
+			}
 		})
 	})
 })
