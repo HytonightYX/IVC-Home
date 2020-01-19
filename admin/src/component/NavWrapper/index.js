@@ -80,7 +80,7 @@ class NavWrapper extends React.Component {
 		return (
 			<Layout className="g-menu">
 				<Sider trigger={null} collapsible collapsed={this.state.collapsed}>
-					<div className="m-logo">{collapsed ? <Icon type='read'/> : <span><Icon type='read' style={{marginRight: 5}}/>图书后台管理</span>}</div>
+					<div className="m-logo">{collapsed ? <Icon type='read'/> : <span><Icon type='read' style={{marginRight: 5}}/>IVC后台管理</span>}</div>
 					<Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
 						{this.recursion(MENU_MAIN)}
 					</Menu>
