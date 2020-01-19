@@ -45,7 +45,7 @@ class Login extends React.Component {
 				{this.currUser && <Redirect to='/'/>}
 
 				<div className="m-tri">
-					图书后台管理系统
+					IVC 管理系统
 				</div>
 				<div className='m-login'>
 					<Form>

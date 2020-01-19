@@ -9,6 +9,7 @@
     "babel-plugin-import": "^1.12.2",
     "cheerio": "^1.0.0-rc.3",
     "customize-cra": "^0.8.0",
+    "dayjs": "^1.8.19",
     "echarts": "^4.5.0",
     "echarts-for-react": "^2.0.15-beta.1",
     "jsonp": "^0.2.1",

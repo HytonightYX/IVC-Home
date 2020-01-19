@@ -5,5 +5,8 @@ export const API_USER_LOGIN = API_SERVER + '/login'
 
 export const API_MEMBER_LIST  = API_SERVER + '/member'
 export const API_MEMBER_EDIT  = API_SERVER + '/member/edit'
+
+export const API_POST_LIST_SIMPLE = API_SERVER + '/post/simple'
+
 export const API_IMAGE_UPLOAD  = API_SERVER + '/imgUpload'
 export const API_STATIC_IMAGE  = API_SERVER + '/static/image'

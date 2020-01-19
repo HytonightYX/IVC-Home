@@ -57,6 +57,18 @@ class User {
 			message.error('网络错误')
 		}
 	}
+
+	@action
+	async listPost() {
+		try {
+			const r = await axios.get(urls.API_POST_LIST_SIMPLE)
+			if (r && r.status === 200) {
+				return r.data.data
+			}
+		} catch (e) {
+			message.error('网络错误')
+		}
+	}
 }
 
 export default new User()

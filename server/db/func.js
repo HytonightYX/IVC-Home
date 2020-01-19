@@ -47,7 +47,7 @@ const memberEdit = async (params) => {
 
 /**
  * 获取所有成员信息缩略信息
- * 用于首页展示（去掉多余的文章详情）
+ * 用于首页展示和管理端列表展示（去掉多余的文章详情）
  */
 const postListSimple = async () => {
 	const [rows, fields] = await pool.query(`SELECT id, title, cover, create_time, status FROM post`)

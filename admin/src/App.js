@@ -16,6 +16,7 @@ export default () => (
 						<NavWrapper>
 							<Switch>
 								<Route exact path='/' component={Loadable({loader: () => import('./app/member')})}/>
+								<Route exact path='/post' component={Loadable({loader: () => import('./app/post')})}/>
 								<Route exact path='/err/304' component={Loadable({loader: () => import('./app/err/304')})}/>
 								<Route component={Loadable({loader: () => import('./app/err/404')})}/>
 							</Switch>

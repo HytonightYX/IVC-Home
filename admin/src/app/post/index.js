@@ -1,8 +1,10 @@
+import dayjs from 'dayjs'
 import React from 'react'
 import { Form, Radio, Table, Input, Button, Modal, Tag, Select, Spin, Icon } from 'antd'
 import { inject, observer } from 'mobx-react'
 
 import './index.less'
+import { formatApdt } from '../../util/date'
 
 @inject('userStore')
 @observer
@@ -14,21 +16,21 @@ class Post extends React.Component {
 			loading: false,
 			search: false,
 			visAddUser: false,
-			members: []
+			posts: []
 		}
 	}
 
 	async componentDidMount() {
 		this.setState({loading: true})
-		const members = await this.props.userStore.listMember()
+		const posts = await this.props.userStore.listPost()
 		this.setState({
 			loading: false,
-			members
+			posts
 		})
 	}
 
 	render() {
-		const {members, loading} = this.state
+		const {posts, loading} = this.state
 		const {getFieldDecorator} = this.props.form
 		const formItemLayout = {
 			labelCol: {span: 5},
@@ -36,23 +38,39 @@ class Post extends React.Component {
 		}
 		const columns = [
 			{
-				title: '姓名',
-				dataIndex: 'name',
-				width: 150
+				title: 'id',
+				dataIndex: 'id',
+				width: 120
 			}, {
-				title: '标签',
-				dataIndex: 'tag',
-				render: (text) => <Tag color="#108ee9">{text}</Tag>
+				title: '标题',
+				dataIndex: 'title',
+				width: 800
 			}, {
-				title: '简介',
-				dataIndex: 'bio',
-				render: (text) => <span className="col-bio">{text}</span>,
+				title: '状态',
+				dataIndex: 'status',
+				render: (text) => {
+					if (text === 0) {
+						return <Tag color='#2db7f5'>展示中</Tag>
+					}
+
+					if (text === 1) {
+						return <Tag color='#9E9E9E'>已下架</Tag>
+					}
+				}
+			}, {
+				title: '创建时间',
+				dataIndex: 'create_time',
+				render: (text) => <span>{formatApdt(text)}</span>,
 			}, {
 				title: '功能',
 				key: 'action',
-				width: 120,
+				width: 300,
 				render: (text, record) => (
 					<div className="m-fun">
+						<Button size='small' className="m-blue">
+							{record.status === 0 && '下架'}
+							{record.status === 1 && '展示'}
+						</Button>
 						<Button type='primary' size='small' className="m-blue">修改</Button>
 						<Button type='danger' size='small' className="m-blue">删除</Button>
 					</div>
@@ -64,87 +82,16 @@ class Post extends React.Component {
 			<div className='g-content-sub'>
 				<div className="m-userlist">
 					<Button type="primary" style={{marginBottom: 16}} onClick={() => this.setState({visAddUser: true})}><Icon
-						type="user-add"/>添加用户</Button>
+						type="plus"/>新建文章</Button>
 
 					<Spin
 						tip="加载中"
 						spinning={loading}
 						indicator={<Icon type="loading" style={{fontSize: 24}} spin/>}
 					>
-						<Table size='small' dataSource={members} columns={columns} rowKey={item => item.id}/>
+						<Table size='small' dataSource={posts} columns={columns} rowKey={item => item.id}/>
 					</Spin>
 				</div>
-
-				<Modal
-					title="创建用户"
-					visible={this.state.visAddUser}
-					onOk={() => this.setState({visAddUser: false})}
-					onCancel={() => {
-						this.setState({visAddUser: false})
-					}}
-				>
-					<Form layout="horizontal">
-						<Form.Item label="用户名" {...formItemLayout}>
-							{
-								getFieldDecorator('username', {
-									initialValue: ''
-								})(
-									<Input type="text" placeholder="请输入用户名..."/>
-								)
-							}
-						</Form.Item>
-						<Form.Item label="姓名" {...formItemLayout}>
-							{
-								getFieldDecorator('name', {
-									initialValue: ''
-								})(
-									<Input type="text" placeholder="请输入姓名..."/>
-								)
-							}
-						</Form.Item>
-						<Form.Item label="邮箱" {...formItemLayout}>
-							{
-								getFieldDecorator('email', {
-									initialValue: ''
-								})(
-									<Input type="text" placeholder="请输入邮箱..."/>
-								)
-							}
-						</Form.Item>
-						<Form.Item label="手机" {...formItemLayout}>
-							{
-								getFieldDecorator('phone', {
-									initialValue: ''
-								})(
-									<Input type="text" placeholder="请输入手机..."/>
-								)
-							}
-						</Form.Item>
-						<Form.Item label="性别" {...formItemLayout}>
-							{
-								getFieldDecorator('sex', {
-									initialValue: '',
-								})(
-									<Radio.Group onChange={this.onChange} value={this.state.value}>
-										<Radio value={1}>男</Radio>
-										<Radio value={2}>女</Radio>
-									</Radio.Group>
-								)
-							}
-						</Form.Item>
-						<Form.Item label="状态" {...formItemLayout}>
-							{
-								getFieldDecorator('state', {
-									initialValue: 1
-								})(
-									<Select>
-										<Select.Option value={1}>开启</Select.Option>
-										<Select.Option value={0}>关闭</Select.Option>
-									</Select>
-								)}
-						</Form.Item>
-					</Form>
-				</Modal>
 			</div>
 		)
 	}
