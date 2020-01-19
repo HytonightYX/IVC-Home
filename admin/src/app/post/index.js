@@ -1,13 +1,14 @@
-import dayjs from 'dayjs'
 import React from 'react'
 import { Form, Radio, Table, Input, Button, Modal, Tag, Select, Spin, Icon } from 'antd'
 import { inject, observer } from 'mobx-react'
 
 import './index.less'
+import { withRouter } from 'react-router'
 import { formatApdt } from '../../util/date'
 
 @inject('userStore')
 @observer
+@withRouter
 @Form.create()
 class Post extends React.Component {
 	constructor(props) {
@@ -81,7 +82,7 @@ class Post extends React.Component {
 		return (
 			<div className='g-content-sub'>
 				<div className="m-userlist">
-					<Button type="primary" style={{marginBottom: 16}} onClick={() => this.setState({visAddUser: true})}><Icon
+					<Button type="primary" style={{marginBottom: 16}} onClick={() => this.props.history.push('/write')}><Icon
 						type="plus"/>新建文章</Button>
 
 					<Spin
