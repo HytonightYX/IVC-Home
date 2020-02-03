@@ -12,6 +12,9 @@ class User {
 	@observable
 	memberList = []
 
+	@observable
+	postList = []
+
 	@action
 	async login(params) {
 		const r = await axios.post(urls.API_USER_LOGIN, params)
@@ -37,7 +40,6 @@ class User {
 	async listMember() {
 		try {
 			const r = await axios.get(urls.API_MEMBER_LIST)
-			console.log(r)
 			if (r && r.status === 200) {
 				return r.data.data
 			}
@@ -74,6 +76,18 @@ class User {
 	async createPost(params) {
 		try {
 			const r = await axios.post(urls.API_POST_CREATE, params)
+			if (r && r.status === 200) {
+				return r.data.data
+			}
+		} catch (e) {
+			message.error('网络错误')
+		}
+	}
+
+	@action
+	async deletePost(params) {
+		try {
+			const r = await axios.post(urls.API_POST_DELETE, params)
 			if (r && r.status === 200) {
 				return r.data.data
 			}

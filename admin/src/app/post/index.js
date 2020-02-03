@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Radio, Table, Input, Button, Modal, Tag, Select, Spin, Icon } from 'antd'
+import { Form, Radio, Table, Input, Button, Modal, Tag, Select, Spin, Icon, message } from 'antd'
 import { inject, observer } from 'mobx-react'
 
 import './index.less'
@@ -28,6 +28,19 @@ class Post extends React.Component {
 			loading: false,
 			posts
 		})
+	}
+
+	handleDel = async (id) => {
+		this.setState({loading: true})
+		const newList = await this.props.userStore.deletePost({id})
+		if (newList) {
+			this.setState({
+				loading: false,
+				posts: newList
+			})
+		} else {
+			message.error('获取数据失败')
+		}
 	}
 
 	render() {
@@ -68,12 +81,12 @@ class Post extends React.Component {
 				width: 300,
 				render: (text, record) => (
 					<div className="m-fun">
-						<Button size='small' className="m-blue">
-							{record.status === 0 && '下架'}
-							{record.status === 1 && '展示'}
-						</Button>
+						{/*<Button size='small' className="m-blue">*/}
+						{/*	{record.status === 0 && '下架'}*/}
+						{/*	{record.status === 1 && '展示'}*/}
+						{/*</Button>*/}
 						<Button type='primary' size='small' className="m-blue">修改</Button>
-						<Button type='danger' size='small' className="m-blue">删除</Button>
+						<Button type='danger' size='small' className="m-blue" onClick={() => this.handleDel(record.id)}>删除</Button>
 					</div>
 				),
 			}
