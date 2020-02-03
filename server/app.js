@@ -7,7 +7,7 @@ const shortuuid = require('short-uuid')
 const app = express()
 const port = 7000
 
-const {userLogin, memberList, memberEdit, postListSimple, postEdit} = require('./db/func')
+const {userLogin, memberList, memberEdit, postListSimple, postEdit, postCreate} = require('./db/func')
 
 app.use(compression())
 app.use(cors())
@@ -80,8 +80,8 @@ app.get('/post/simple', async (req, res) => {
 app.post('/post/create', async (req, res) => {
 	const params = req.body
 	try {
-		console.log(params)
-		res.status(200).json({code: 200, data: params, msg: '新建文章成功'})
+		await postCreate(params)
+		res.status(200).json({code: 200, data: {ok: 1}, msg: '新建文章成功'})
 	} catch (e) {
 		res.status(200).json({code: -1, data: {}, msg: e.message})
 	}

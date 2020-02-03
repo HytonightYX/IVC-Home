@@ -1,11 +1,16 @@
 import 'braft-editor/dist/index.css'
+import { inject, observer } from 'mobx-react'
 import React from 'react'
 import BraftEditor from 'braft-editor'
-import { Form, Input, Button } from 'antd'
+import { Form, Input, Button, message } from 'antd'
 import './style.less'
+import { withRouter } from 'react-router'
 import { API_IMAGE_UPLOAD, API_STATIC_IMAGE } from '../../constant/urls'
 
-class FormDemo extends React.Component {
+@inject('userStore')
+@observer
+@withRouter
+class Write extends React.Component {
 
 	componentDidMount() {
 		// // 异步设置编辑器内容
@@ -25,7 +30,19 @@ class FormDemo extends React.Component {
 					raw: values.content.toRAW(),
 					html: values.content.toHTML()
 				}
-				console.log(submitData)
+
+				this.props.userStore.createPost(submitData)
+					.then(r => {
+						if (r.ok === 1) {
+							message.success('新建成功', 0.7)
+							setTimeout(() => {
+								this.props.history.push('/post')
+							}, 1000)
+						}
+					})
+					.catch(e => {
+						console.error(e)
+					})
 			}
 		})
 	}
@@ -117,4 +134,4 @@ class FormDemo extends React.Component {
 
 }
 
-export default Form.create()(FormDemo)
+export default Form.create()(Write)

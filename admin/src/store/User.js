@@ -69,6 +69,18 @@ class User {
 			message.error('网络错误')
 		}
 	}
+
+	@action
+	async createPost(params) {
+		try {
+			const r = await axios.post(urls.API_POST_CREATE, params)
+			if (r && r.status === 200) {
+				return r.data.data
+			}
+		} catch (e) {
+			message.error('网络错误')
+		}
+	}
 }
 
 export default new User()
