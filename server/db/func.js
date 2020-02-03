@@ -1,6 +1,7 @@
 const mysql = require('mysql2/promise')
 const config = require('./conf.js')
 const pool = mysql.createPool(config)
+const dayjs = require('dayjs')
 
 async function findUser(username) {
 	const result = await pool.query('SELECT * FROM user WHERE username = ?', [username])
@@ -54,6 +55,18 @@ const postListSimple = async () => {
 	return rows || []
 }
 
+/**
+ * 添加文章
+ */
+const postCreate = async (params) => {
+	const time = dayjs(Date.now()).format('YYYYMMDDhhmmss')
+	const [rows, fields] = await pool.query(`
+		INSERT INTO post (cover, title, html, raw, status, create_time) 
+		VALUES (?, ?, ?, ?, ?, ?)
+	`, [params.cover, params.title, params.html, params.raw, 0, time])
+	return rows || []
+}
+
 const postEdit = () => {
 
 }
@@ -63,5 +76,6 @@ module.exports = {
 	memberList,
 	memberEdit,
 	postListSimple,
+	postCreate,
 	postEdit
 }

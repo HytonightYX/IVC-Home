@@ -75,6 +75,19 @@ app.get('/post/simple', async (req, res) => {
 })
 
 /**
+ * 添加文章
+ */
+app.post('/post/create', async (req, res) => {
+	const params = req.body
+	try {
+		console.log(params)
+		res.status(200).json({code: 200, data: params, msg: '新建文章成功'})
+	} catch (e) {
+		res.status(200).json({code: -1, data: {}, msg: e.message})
+	}
+})
+
+/**
  * 图片上传接口
  * @return uuid(图片uuid) 和 type(文件后缀)
  * @description 返回的 uuid 存到 post 表中的 image 字段里。
