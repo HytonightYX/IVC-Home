@@ -7,7 +7,7 @@ const shortuuid = require('short-uuid')
 const app = express()
 const port = 7000
 
-const {userLogin, memberList, memberEdit, postListSimple, postEdit, postCreate, postDelete} = require('./db/func')
+const {userLogin, memberList, memberEdit, postListSimple, postEdit, postCreate, postDelete, postGetFull} = require('./db/func')
 
 app.use(compression())
 app.use(cors())
@@ -96,6 +96,33 @@ app.post('/post/delete', async (req, res) => {
 		await postDelete(params)
 		const list = await postListSimple()
 		res.status(200).json({code: 200, data: list, msg: '新建文章成功'})
+	} catch (e) {
+		res.status(200).json({code: -1, data: {}, msg: e.message})
+	}
+})
+
+/**
+ * 删除文章
+ */
+app.post('/post/full', async (req, res) => {
+	const params = req.body
+	try {
+		const post = await postGetFull(params)
+		res.status(200).json({code: 200, data: post[0], msg: '新建文章成功'})
+	} catch (e) {
+		res.status(200).json({code: -1, data: {}, msg: e.message})
+	}
+})
+
+/**
+ * 更新文章
+ */
+app.post('/post/edit', async (req, res) => {
+	const params = req.body
+	console.log(params)
+	try {
+		await postEdit(params)
+		res.status(200).json({code: 200, data: {ok: 1}, msg: '新建文章成功'})
 	} catch (e) {
 		res.status(200).json({code: -1, data: {}, msg: e.message})
 	}

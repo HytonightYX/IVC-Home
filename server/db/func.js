@@ -71,12 +71,25 @@ const postCreate = async (params) => {
  * 删除文章
  */
 const postDelete = async (params) => {
-	console.log(params)
 	await pool.query(`UPDATE post SET del = 1 WHERE id=${params.id}`)
 }
 
-const postEdit = () => {
+const postGetFull = async (params) => {
+	const [rows, fields] = await pool.query(`SELECT id, title, cover, raw, create_time FROM post WHERE id = ${params.id} AND del IS NULL`)
+	if (rows[0]) {
+		return rows
+	} else {
+		throw new Error('找不到该文档')
+	}
+}
 
+/**
+ * 编辑文章
+ */
+const postEdit = async (params) => {
+	const time = dayjs(Date.now()).format('YYYYMMDDhhmmss')
+	const sql = `UPDATE post SET title = ?, raw = ?, html = ?, create_time = ? WHERE id = ${params.id}`
+	await pool.query(sql, [params.title, params.raw, params.html, time])
 }
 
 module.exports = {
@@ -86,5 +99,6 @@ module.exports = {
 	postListSimple,
 	postCreate,
 	postDelete,
+	postGetFull,
 	postEdit
 }
