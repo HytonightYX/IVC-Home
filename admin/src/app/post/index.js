@@ -11,14 +11,11 @@ import { formatApdt } from '../../util/date'
 @withRouter
 @Form.create()
 class Post extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-			loading: false,
-			search: false,
-			visAddUser: false,
-			posts: []
-		}
+	state = {
+		loading: false,
+		search: false,
+		visAddUser: false,
+		posts: []
 	}
 
 	async componentDidMount() {
@@ -28,6 +25,10 @@ class Post extends React.Component {
 			loading: false,
 			posts
 		})
+	}
+
+	handleEdit = (id) => {
+		this.props.history.push('edit/' + id)
 	}
 
 	handleDel = async (id) => {
@@ -74,18 +75,15 @@ class Post extends React.Component {
 			}, {
 				title: '创建时间',
 				dataIndex: 'create_time',
+				width: 230,
 				render: (text) => <span>{formatApdt(text)}</span>,
 			}, {
 				title: '功能',
 				key: 'action',
-				width: 300,
+				width: 200,
 				render: (text, record) => (
 					<div className="m-fun">
-						{/*<Button size='small' className="m-blue">*/}
-						{/*	{record.status === 0 && '下架'}*/}
-						{/*	{record.status === 1 && '展示'}*/}
-						{/*</Button>*/}
-						<Button type='primary' size='small' className="m-blue">修改</Button>
+						<Button type='primary' size='small' className="m-blue" onClick={() => this.handleEdit(record.id)}>修改</Button>
 						<Button type='danger' size='small' className="m-blue" onClick={() => this.handleDel(record.id)}>删除</Button>
 					</div>
 				),

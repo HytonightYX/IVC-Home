@@ -3,6 +3,9 @@ import axios from 'axios'
 import * as urls from '../constant/urls'
 import { message } from 'antd'
 
+/**
+ * 由于项目比较小，因此将所有的 action 写在这里，不做拆分
+ */
 class User {
 	@observable
 	currUser = {
@@ -91,6 +94,29 @@ class User {
 			if (r && r.status === 200) {
 				return r.data.data
 			}
+		} catch (e) {
+			message.error('网络错误')
+		}
+	}
+
+	/**
+	 * 获取完整文章，用于修改
+	 */
+	@action
+	async getPostFull(params) {
+		try {
+			const r = await axios.post(urls.API_POST_FULL, params)
+			return r.data.data
+		} catch (e) {
+			message.error('网络错误')
+		}
+	}
+
+	@action
+	async editPost(params) {
+		try {
+			const r = await axios.post(urls.API_POST_EDIT, params)
+			return r.data.data
 		} catch (e) {
 			message.error('网络错误')
 		}
