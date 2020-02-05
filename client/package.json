@@ -24,6 +24,7 @@
     "react-scripts": "3.2.0",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.88.1",
+    "swr": "^0.1.16",
     "video-react": "^0.14.1"
   },
   "scripts": {

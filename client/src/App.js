@@ -20,7 +20,7 @@ const App = () => (
 			<Route exact path="/ache-image" component={AcheImage}/>
 			<Route exact path="/ache-video" component={AcheVideo}/>
 			<Route exact path="/about" component={About}/>
-			<Route exact path="/post" component={Post}/>
+			<Route exact path="/post/:id" component={Post}/>
 		</ResponsiveContainer>
 	</Router>
 )

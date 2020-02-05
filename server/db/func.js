@@ -75,7 +75,7 @@ const postDelete = async (params) => {
 }
 
 const postGetFull = async (params) => {
-	const [rows, fields] = await pool.query(`SELECT id, title, cover, raw, create_time FROM post WHERE id = ${params.id} AND del IS NULL`)
+	const [rows, fields] = await pool.query(`SELECT id, title, cover, raw, html, create_time FROM post WHERE id = ${params.id} AND del IS NULL`)
 	if (rows[0]) {
 		return rows
 	} else {

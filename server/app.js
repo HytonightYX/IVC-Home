@@ -102,7 +102,7 @@ app.post('/post/delete', async (req, res) => {
 })
 
 /**
- * 删除文章
+ * 获取完整文章
  */
 app.post('/post/full', async (req, res) => {
 	const params = req.body
