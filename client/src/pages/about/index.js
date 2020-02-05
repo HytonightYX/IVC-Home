@@ -2,8 +2,8 @@ import { Modal } from 'semantic-ui-react'
 import React, { Component } from 'react'
 import axios from 'axios'
 import './style.less'
-import IMG_DJC from '../../assert/member/djc.png'
-import { API_MEMBER_LIST } from '../../constant/api'
+import IMG_MEMBER from '../../assert/member/member.png'
+import { API_MEMBER_LIST, API_STATIC_IMAGE } from '../../constant/api'
 
 class About extends Component {
 
@@ -53,7 +53,7 @@ class About extends Component {
 		return (
 			<div className="g-about">
 				<div className="m-title">
-					Meet the Team
+					Meet The Team
 				</div>
 
 				<div className="m-content">
@@ -62,7 +62,7 @@ class About extends Component {
 							return (
 								<div className="member-card" key={item.id}>
 									<div className="member-img">
-										<img src={item.image || IMG_DJC} alt=""/>
+										<img src={item.image ? `${API_STATIC_IMAGE}/${item.image}.png` : IMG_MEMBER} alt=""/>
 									</div>
 									<div className="member-ct">
 										<div className="name">{item.name}</div>
@@ -72,7 +72,7 @@ class About extends Component {
 										<Modal trigger={<div className="more">more ></div>} closeIcon centered={false}
 										       className="m-member-modal">
 											<Modal.Content>
-												<div className="m-image"><img src={IMG_DJC} alt=""/></div>
+												<div className="m-image"><img src={IMG_MEMBER} alt=""/></div>
 												<div className="m-name">{item.name}</div>
 												<div className="m-desc">{item.bio}</div>
 											</Modal.Content>
@@ -83,17 +83,6 @@ class About extends Component {
 						})
 					}
 				</div>
-
-				{/*<Modal*/}
-				{/*	title="Basic Modal"*/}
-				{/*	visible={this.state.visible}*/}
-				{/*	onOk={this.handleOk}*/}
-				{/*	onCancel={this.handleCancel}*/}
-				{/*>*/}
-				{/*	<p>Some contents...</p>*/}
-				{/*	<p>Some contents...</p>*/}
-				{/*	<p>Some contents...</p>*/}
-				{/*</Modal>*/}
 			</div>
 		)
 	}

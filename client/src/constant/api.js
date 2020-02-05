@@ -8,3 +8,4 @@ export const API_UPLOAD   = API_URL + '/upload'
 export const API_CHECK    = API_URL + '/done'
 
 export const API_MEMBER_LIST    = API_SERVER + '/member'
+export const API_STATIC_IMAGE  = API_SERVER + '/static/image'
