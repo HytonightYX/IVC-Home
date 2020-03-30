@@ -3,7 +3,6 @@ import { Link, withRouter } from 'react-router-dom'
 import { Container, Grid, Header, Icon, Image, List, Menu, Responsive, Segment, Sidebar, Visibility } from 'semantic-ui-react'
 import IVC_LOGO from '../../assert/IVC_LOGO.png'
 import { MENU } from '../../constant/config'
-import HomeCarousel from '../HomeCarousel'
 import TopMenu from '../TopMenu'
 
 const getWidth = () => {
@@ -137,7 +136,7 @@ class MobileContainer extends Component {
 								</Menu.Item>
 							</Menu>
 						</Container>
-						<HomeCarousel mobile/>
+
 					</Segment>
 
 					{children}

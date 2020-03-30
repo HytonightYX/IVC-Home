@@ -3,7 +3,7 @@ import React from 'react'
 import { Carousel } from 'antd'
 import './style.less'
 
-const HomeCarousel = (({mobile}) => {
+const HomeCarousel = (({ mobile }) => {
 	return (
 		<div className="g-carousel">
 			<div className="m-title-wrap">
@@ -31,20 +31,20 @@ const HomeCarousel = (({mobile}) => {
 					Intelligent Video Compression
 				</h2>
 
-				<Button size={mobile ? 'large' : 'huge'} inverted download>
+				{/* <Button size={mobile ? 'large' : 'huge'} inverted download>
 					成果展示
 				</Button>
 
 				<Button size={mobile ? 'large' : 'huge'} inverted basic>
 					关于我们
-				</Button>
+				</Button> */}
 			</div>
 
 			<div className="bg-carousel">
 				<Carousel autoplay>
-					<img src={require('../../assert/bg/1.jpg')} alt=""/>
-					<img src={require('../../assert/bg/2.jpg')} alt=""/>
-					<img src={require('../../assert/bg/4.jpg')} alt=""/>
+					<img src={require('../../assert/bg/1.jpg')} alt="" />
+					<img src={require('../../assert/bg/2.jpg')} alt="" />
+					<img src={require('../../assert/bg/4.jpg')} alt="" />
 				</Carousel>
 			</div>
 		</div>

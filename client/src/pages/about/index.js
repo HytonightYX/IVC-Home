@@ -14,7 +14,7 @@ class About extends Component {
 	}
 
 	componentDidMount() {
-		this.setState({loading: true})
+		this.setState({ loading: true })
 		axios.get(API_MEMBER_LIST)
 			.then((data) => {
 				const r = data.data
@@ -28,7 +28,7 @@ class About extends Component {
 			})
 			.catch(e => {
 				console.log(e)
-				this.setState({loading: false})
+				this.setState({ loading: false })
 			})
 	}
 
@@ -47,13 +47,13 @@ class About extends Component {
 
 	render() {
 
-		const {memberList} = this.state
+		const { memberList } = this.state
 		console.log(memberList)
 
 		return (
 			<div className="g-about">
 				<div className="m-title">
-					Meet The Team
+					关于我们
 				</div>
 
 				<div className="m-content">
@@ -62,7 +62,7 @@ class About extends Component {
 							return (
 								<div className="member-card" key={item.id}>
 									<div className="member-img">
-										<img src={item.image ? `${API_STATIC_IMAGE}/${item.image}.png` : IMG_MEMBER} alt=""/>
+										<img src={item.image ? `${API_STATIC_IMAGE}/${item.image}.png` : IMG_MEMBER} alt="" />
 									</div>
 									<div className="member-ct">
 										<div className="name">{item.name}</div>
@@ -70,9 +70,9 @@ class About extends Component {
 										<div className="grade">{item.tag}</div>
 
 										<Modal trigger={<div className="more">more ></div>} closeIcon centered={false}
-										       className="m-member-modal">
+											className="m-member-modal">
 											<Modal.Content>
-												<div className="m-image"><img src={IMG_MEMBER} alt=""/></div>
+												<div className="m-image"><img src={item.image ? `${API_STATIC_IMAGE}/${item.image}.png` : IMG_MEMBER} alt="" /></div>
 												<div className="m-name">{item.name}</div>
 												<div className="m-desc">{item.bio}</div>
 											</Modal.Content>
