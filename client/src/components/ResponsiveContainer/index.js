@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { Container, Grid, Header, Icon, Image, List, Menu, Responsive, Segment, Sidebar, Visibility } from 'semantic-ui-react'
-import IVC_LOGO from '../../assert/IVC_LOGO.png'
+import IVC_LOGO from '../../assert/64x64.png'
 import { MENU } from '../../constant/config'
 import TopMenu from '../TopMenu'
 
@@ -10,7 +10,7 @@ const getWidth = () => {
 	return isSSR ? Responsive.onlyTablet.minWidth : window.innerWidth
 }
 
-const TopNav = withRouter(({fixed, location}) => (
+const TopNav = withRouter(({ fixed, location }) => (
 	<Segment
 		textAlign='center'
 		style={{
@@ -18,19 +18,19 @@ const TopNav = withRouter(({fixed, location}) => (
 		}}
 		vertical
 	>
-		<TopMenu fixed={fixed}/>
+		<TopMenu fixed={fixed} />
 	</Segment>
 ))
 
 class DesktopContainer extends Component {
 	state = {}
 
-	hideFixedMenu = () => this.setState({fixed: false})
-	showFixedMenu = () => this.setState({fixed: true})
+	hideFixedMenu = () => this.setState({ fixed: false })
+	showFixedMenu = () => this.setState({ fixed: true })
 
 	render() {
-		const {children} = this.props
-		const {fixed} = this.state
+		const { children } = this.props
+		const { fixed } = this.state
 
 		return (
 			<Responsive getWidth={getWidth} minWidth={Responsive.onlyTablet.minWidth}>
@@ -39,17 +39,17 @@ class DesktopContainer extends Component {
 					onBottomPassed={this.showFixedMenu}
 					onBottomPassedReverse={this.hideFixedMenu}
 				>
-					<TopNav fixed={fixed}/>
+					<TopNav fixed={fixed} />
 				</Visibility>
 
 				{children}
 
-				<Segment inverted vertical style={{padding: '5em 0em'}}>
+				<Segment inverted vertical style={{ padding: '5em 0em' }}>
 					<Container>
 						<Grid divided inverted stackable>
 							<Grid.Row>
 								<Grid.Column width={3}>
-									<Header inverted as='h4' content='About' style={{background: '#1c1b1c',}}/>
+									<Header inverted as='h4' content='About' style={{ background: '#1c1b1c', }} />
 									<List link inverted>
 										<List.Item as='a'>Sitemap</List.Item>
 										<List.Item as='a'>Contact Us</List.Item>
@@ -58,7 +58,7 @@ class DesktopContainer extends Component {
 									</List>
 								</Grid.Column>
 								<Grid.Column width={3}>
-									<Header inverted as='h4' content='Services' style={{background: '#1c1b1c',}}/>
+									<Header inverted as='h4' content='Services' style={{ background: '#1c1b1c', }} />
 									<List link inverted>
 										<List.Item as='a'>Banana Pre-Order</List.Item>
 										<List.Item as='a'>DNA FAQ</List.Item>
@@ -67,7 +67,7 @@ class DesktopContainer extends Component {
 									</List>
 								</Grid.Column>
 								<Grid.Column width={7}>
-									<Header as='h4' inverted style={{background: '#1c1b1c',}}>
+									<Header as='h4' inverted style={{ background: '#1c1b1c', }}>
 										Footer Header
 									</Header>
 									<p>
@@ -86,14 +86,14 @@ class DesktopContainer extends Component {
 class MobileContainer extends Component {
 	state = {}
 
-	handleSidebarHide = () => this.setState({sidebarOpened: false})
+	handleSidebarHide = () => this.setState({ sidebarOpened: false })
 
-	handleToggle = () => this.setState({sidebarOpened: true})
+	handleToggle = () => this.setState({ sidebarOpened: true })
 
 	render() {
-		const {children} = this.props
-		const {sidebarOpened} = this.state
-		const {pathname} = this.props.location
+		const { children } = this.props
+		const { sidebarOpened } = this.state
+		const { pathname } = this.props.location
 		return (
 			<Responsive
 				as={Sidebar.Pushable}
@@ -123,16 +123,16 @@ class MobileContainer extends Component {
 					<Segment
 						inverted
 						textAlign='center'
-						style={{padding: '1em 0em'}}
+						style={{ padding: '1em 0em' }}
 						vertical
 					>
 						<Container>
 							<Menu inverted pointing secondary size='large'>
 								<Menu.Item onClick={this.handleToggle}>
-									<Icon name='sidebar'/>
+									<Icon name='sidebar' />
 								</Menu.Item>
-								<Menu.Item position='right' style={{padding: 0}}>
-									<Image src={IVC_LOGO} size='mini'/>
+								<Menu.Item position='right' style={{ padding: 0 }}>
+									<Image src={IVC_LOGO} size='mini' />
 								</Menu.Item>
 							</Menu>
 						</Container>
@@ -149,7 +149,7 @@ class MobileContainer extends Component {
 
 MobileContainer = withRouter(MobileContainer)
 
-export default ({children}) => (
+export default ({ children }) => (
 	<div>
 		<DesktopContainer>{children}</DesktopContainer>
 		<MobileContainer>{children}</MobileContainer>

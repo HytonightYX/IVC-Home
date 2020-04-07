@@ -92,7 +92,6 @@
   color: #8e8787;
 }
 .g-home .link-blod {
-  font-family: 'Google Sans', sans-serif;
   font-size: 16px;
   font-weight: 700;
   line-height: 20px;
@@ -100,6 +99,9 @@
   display: inline-block;
   margin-top: 8px;
   position: relative;
+}
+.g-home .link-blod img {
+  height: 20px;
 }
 .m-popover__home {
   font-size: 16px;

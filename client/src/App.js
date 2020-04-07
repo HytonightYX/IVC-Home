@@ -10,17 +10,16 @@ import Post from './pages/post'
 
 import ResponsiveContainer from './components/ResponsiveContainer'
 
-import 'semantic-ui-css/semantic.min.css'
 import './styles/global.less'
 
 const App = () => (
 	<Router history={history}>
 		<ResponsiveContainer>
-			<Route exact path="/" component={Home}/>
-			<Route exact path="/ache-image" component={AcheImage}/>
-			<Route exact path="/ache-video" component={AcheVideo}/>
-			<Route exact path="/about" component={About}/>
-			<Route exact path="/post/:id" component={Post}/>
+			<Route exact path="/" component={Home} />
+			<Route exact path="/ache-image" component={AcheImage} />
+			<Route exact path="/ache-video" component={AcheVideo} />
+			<Route exact path="/about" component={About} />
+			<Route exact path="/post/:id" component={Post} />
 		</ResponsiveContainer>
 	</Router>
 )

@@ -7,6 +7,7 @@ import { message, Popover } from 'antd'
 import axios from 'axios'
 import { API_POST_LIST_SIMPLE } from '../../constant/api'
 import { formatTs } from '../../utils/date'
+import MoreImg from './more.png'
 
 @withRouter
 class Home extends React.Component {
@@ -105,7 +106,7 @@ class Home extends React.Component {
               <div className="post-list">
                 {posts.map(item => {
                   return (
-                    <Segment vertical>
+                    <Segment vertical key={item.id}>
                       <a
                         className="title"
                         onClick={() => this.gotoPost(item.id)}
@@ -120,7 +121,7 @@ class Home extends React.Component {
                 })}
               </div>
               <Link to="/postlist" className="link-blod">
-                更多动态
+                更多动态 <i aria-hidden="true" className="arrow right icon"></i>
               </Link>
             </div>
             <Divider style={{ padding: '2em 0em' }} />
@@ -131,7 +132,7 @@ class Home extends React.Component {
               <p>地址: 杭州师范大学仓前校区勤园 11 号楼 506</p>
               <p>联系方式: + 571 28868320</p>
               <Link to="/join" className="link-blod">
-                加入我们
+                加入我们 <i aria-hidden="true" className="arrow right icon"></i>
               </Link>
             </div>
           </Container>
