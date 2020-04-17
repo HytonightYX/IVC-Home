@@ -4,6 +4,7 @@ const cors = require('cors')
 const compression = require('compression')
 const formidable = require('formidable')
 const shortuuid = require('short-uuid')
+const qiniu = require('qiniu')
 const app = express()
 const port = 7000
 
@@ -18,6 +19,9 @@ const {
   postGetFull
 } = require('./db/func')
 
+qiniu.conf.ACCESS_KEY = '25E0vVorHfwQElXxDFiyo3dydVPg7gpmAy7eRjrt'
+qiniu.conf.SECRET_KEY = 'gZGcGt_5JWW2OltCOl_cGfnH18VPcLNsHWSK3OoP'
+
 app.use(compression())
 app.use(cors())
 app.use(bodyParser.json({ limit: '10mb', extended: true }))
@@ -27,7 +31,7 @@ app.use(express.static(__dirname + '/'))
 /**
  * 测试接口
  */
-app.get('/test', async function(req, res) {
+app.get('/test', async function (req, res) {
   res.status(200).json({ code: 200, data: { ok: 1 }, msg: '接口测试成功' })
 })
 
@@ -155,7 +159,7 @@ app.post('/imgUpload', async (req, res) => {
   let type
   form.parse(req)
 
-  form.on('fileBegin', function(name, file) {
+  form.on('fileBegin', function (name, file) {
     type = file.name.split('.').slice(-1)
     file.path = 'static/image/' + `${uuid}.${type}`
   })
@@ -170,6 +174,25 @@ app.post('/imgUpload', async (req, res) => {
       }
     })
   })
+})
+
+// 获取七牛云token
+app.post('/qiniutoken', async (req, res) => {
+  const bucket = 'noter-v2'
+
+  const getToken = () => {
+    const putPolicy = new qiniu.rs.PutPolicy({
+      scope: bucket
+    })
+    return putPolicy.uploadToken()
+  }
+
+  try {
+    const token = getToken()
+    res.status(200).json({ code: 200, data: { token }, msg: '获取token成功' })
+  } catch (e) {
+    res.status(200).json({ code: -1, data: {}, msg: e.message })
+  }
 })
 
 app.listen(port, () => console.log(`> Running on localhost:${port}`))

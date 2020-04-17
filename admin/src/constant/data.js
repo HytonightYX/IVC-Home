@@ -10,3 +10,8 @@ export const MENU_MAIN = [
 		icon: 'read'
 	},
 ]
+
+export const QINIU_CONFIG = {
+	BASE_QINIU_URL: 'http://qn-noter.yunxi.site/',
+	QINIU_SERVER: 'https://upload-z2.qiniup.com'
+}

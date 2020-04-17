@@ -5,20 +5,23 @@ import BraftEditor from 'braft-editor'
 import { Form, Input, Button, message } from 'antd'
 import './style.less'
 import { withRouter } from 'react-router'
-import { API_IMAGE_UPLOAD, API_STATIC_IMAGE } from '../../constant/urls'
-import pos from '../../util/pos'
+import { QINIU_CONFIG } from '../../constant/data'
+import axios from 'axios'
+
+const { BASE_QINIU_URL, QINIU_SERVER } = QINIU_CONFIG
 
 @inject('userStore')
 @observer
 @withRouter
 class Edit extends React.Component {
 	state = {
-		post: null
+		post: null,
+		qiniutoken: null
 	}
 
 	async componentDidMount() {
 		const postId = this.props.match.params.id
-		const data = await this.props.userStore.getPostFull({id: postId})
+		const data = await this.props.userStore.getPostFull({ id: postId })
 
 		this.props.form.setFieldsValue({
 			content: BraftEditor.createEditorState(data.raw),
@@ -28,6 +31,19 @@ class Edit extends React.Component {
 		this.setState({
 			postId: data.id
 		})
+
+		try {
+			const r = await axios.post('http://localhost:7000/qiniutoken')
+			if (r && r.data.data) {
+				this.setState({
+					qiniutoken: r.data.data.token
+				})
+			} else {
+				throw new Error('七牛token获取失败')
+			}
+		} catch (e) {
+			message.error('七牛token获取失败')
+		}
 	}
 
 	handleSubmit = (event) => {
@@ -57,23 +73,25 @@ class Edit extends React.Component {
 		})
 	}
 
-	imgUpload = (param) => {
+	myUploadFn = (param) => {
+		const serverURL = QINIU_SERVER
 		const xhr = new XMLHttpRequest
 		const fd = new FormData()
+		const token = this.state.qiniutoken
 
 		const successFn = (response) => {
-			const rt = JSON.parse(xhr.responseText)
-			console.log(`${API_STATIC_IMAGE}/${rt.data.uuid}.${rt.data.type}`)
 			param.success({
-				url: `${API_STATIC_IMAGE}/${rt.data.uuid}.${rt.data.type}`
+				url: BASE_QINIU_URL + JSON.parse(xhr.responseText).hash + '?imageslim'
 			})
 		}
 
 		const progressFn = (event) => {
+			// 上传进度发生变化时调用param.progress
 			param.progress(event.loaded / event.total * 100)
 		}
 
 		const errorFn = (response) => {
+			// 上传发生错误时调用param.error
 			param.error({
 				msg: 'unable to upload.'
 			})
@@ -85,17 +103,18 @@ class Edit extends React.Component {
 		xhr.addEventListener('abort', errorFn, false)
 
 		fd.append('file', param.file)
-		xhr.open('POST', API_IMAGE_UPLOAD, true)
+		fd.append('token', token)
+		xhr.open('POST', serverURL, true)
 		xhr.send(fd)
 	}
 
 	render() {
 		const editorProps = {
 			media: {
-				uploadFn: this.imgUpload
+				uploadFn: this.myUploadFn
 			}
 		}
-		const {getFieldDecorator} = this.props.form
+		const { getFieldDecorator } = this.props.form
 		const controls = ['bold', 'italic', 'underline', 'text-color', 'separator', 'link', 'separator', 'media']
 
 		return (
@@ -108,7 +127,7 @@ class Edit extends React.Component {
 								message: '请输入标题',
 							}],
 						})(
-							<Input size="large" placeholder="请输入标题"/>
+							<Input size="large" placeholder="请输入标题" />
 						)}
 					</Form.Item>
 					<Form.Item label="文章正文">

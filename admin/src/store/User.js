@@ -18,6 +18,9 @@ class User {
 	@observable
 	postList = []
 
+	@observable
+	qiniuToken = null
+
 	@action
 	async login(params) {
 		const r = await axios.post(urls.API_USER_LOGIN, params)
@@ -91,8 +94,10 @@ class User {
 	async deletePost(params) {
 		try {
 			const r = await axios.post(urls.API_POST_DELETE, params)
-			if (r && r.status === 200) {
-				return r.data.data
+			if (r && r.status === 200 && r.data.data) {
+				runInAction(() => {
+					this.qiniuToken = r.data.data.token
+				})
 			}
 		} catch (e) {
 			message.error('网络错误')
@@ -120,6 +125,17 @@ class User {
 		} catch (e) {
 			message.error('网络错误')
 		}
+	}
+
+	@action
+	async getQiniuToken() {
+		try {
+			const r = await axios.post('localhost:7000/qiniutoken')
+			return r.data.data
+		} catch (e) {
+			message.error('网络错误')
+		}
+
 	}
 }
 
