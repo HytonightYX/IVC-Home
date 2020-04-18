@@ -82,7 +82,7 @@ app.post('/member/edit', async (req, res) => {
 })
 
 /**
- * 获取所有文章信息
+ * 获取所有文章信息列表
  */
 app.get('/post/simple', async (req, res) => {
   try {

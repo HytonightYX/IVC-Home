@@ -51,7 +51,7 @@ const memberEdit = async (params) => {
  * 用于首页展示和管理端列表展示（去掉多余的文章详情）
  */
 const postListSimple = async () => {
-	const [rows, fields] = await pool.query(`SELECT id, title, cover, create_time, status FROM post WHERE del IS NULL`)
+	const [rows, fields] = await pool.query(`SELECT id, title, cover, create_time, status FROM post WHERE del IS NULL ORDER BY create_time DESC`)
 	return rows || []
 }
 
@@ -74,6 +74,9 @@ const postDelete = async (params) => {
 	await pool.query(`UPDATE post SET del = 1 WHERE id=${params.id}`)
 }
 
+/**
+ * 获取完整文章
+ */
 const postGetFull = async (params) => {
 	const [rows, fields] = await pool.query(`SELECT id, title, cover, raw, html, create_time FROM post WHERE id = ${params.id} AND del IS NULL`)
 	if (rows[0]) {

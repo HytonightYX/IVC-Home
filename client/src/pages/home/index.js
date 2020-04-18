@@ -121,7 +121,7 @@ class Home extends React.Component {
                 })}
               </div>
               <Link to="/postlist" className="link-blod">
-                更多动态 <i aria-hidden="true" className="arrow right icon"></i>
+                更多 <i aria-hidden="true" className="arrow right icon"></i>
               </Link>
             </div>
             <Divider style={{ padding: '2em 0em' }} />
