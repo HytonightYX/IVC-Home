@@ -15,7 +15,7 @@ module.exports = {
     client: resolve('../src/index.js')
   },
   output: {
-    path: resolve('../ivc-client'),
+    path: resolve('../ivc-admin'),
     filename: devMode ? 'js/[name].[hash].js' : 'js/[name].[contenthash:8].js',
     chunkFilename: devMode ? 'chunks/[name].[hash:4].js' : 'chunks/[name].[contenthash:8].js'
   },
@@ -37,7 +37,8 @@ module.exports = {
           {
             loader: 'less-loader',
             options: {
-              javascriptEnabled: true
+              javascriptEnabled: true,
+              modifyVars: { '@primary-color': '#3d74aa' },
             }
           }]
       },

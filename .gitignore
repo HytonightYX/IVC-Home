@@ -29,3 +29,9 @@
 **/secret.js
 **/.cache
 server/static/image/*
+
+# output folder
+**/dist
+**/ivc
+**/ivc-client
+**/ivc-admin
