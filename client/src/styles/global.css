@@ -1,0 +1,153 @@
+@import '~video-react/dist/video-react.css';
+body {
+  -webkit-font-smoothing: antialiased;
+  background: #616161;
+}
+/************** overwrite ant design **************/
+.ant-layout-header {
+  background: white;
+}
+.ant-layout-footer {
+  background: #ffffff;
+  color: #ffffff;
+}
+.ant-btn-primary {
+  background-color: #0066ff;
+  border-color: #0066ff;
+}
+body {
+  background: #ffffff !important;
+}
+/************** custom **************/
+.intro {
+  display: block;
+  font-size: 2em;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+}
+.header {
+  padding: 25px;
+  display: flex;
+  justify-content: space-between;
+  background: #ffffff;
+}
+.header .nav-top {
+  display: flex;
+}
+.header .nav-top a {
+  color: #000;
+  font-size: 16px;
+}
+.header .nav-top a:hover {
+  color: #0055e6;
+}
+.header .nav-top > :not(:last-child) {
+  margin-right: 1.5rem;
+}
+.header .logo {
+  color: #000000;
+  text-decoration: none;
+  font-size: 1.6rem;
+}
+.header .logo:hover {
+  color: #0055e6;
+}
+.header .version {
+  padding: 0.25rem 0.5rem;
+  margin-left: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25;
+  font-weight: 500;
+  text-decoration: none;
+  color: #495057;
+  background-color: #f1f3f5;
+  border-radius: 4px;
+}
+.header .version:hover {
+  background-color: #e9ecef;
+}
+.content {
+  background: #ffffff;
+  text-align: center;
+}
+.content .picture-warp {
+  min-height: 400px;
+  width: 65%;
+  margin: 30px auto;
+}
+.content .picture-warp .feature-select {
+  text-align: left !important;
+}
+.content .picture-warp .two-pictures {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.content .picture-warp .two-pictures .preview,
+.content .picture-warp .two-pictures .result {
+  position: relative;
+  box-sizing: border-box;
+  max-width: 48%;
+  height: auto;
+}
+.content .picture-warp .two-pictures .preview label,
+.content .picture-warp .two-pictures .result label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px 16px;
+  background-color: #e6fafd;
+  color: gray;
+  border: 1px solid #d5d5d5;
+  line-height: 1;
+  z-index: 10;
+}
+.content .picture-warp .two-pictures .preview img,
+.content .picture-warp .two-pictures .result img {
+  width: 100%;
+}
+.content .picture-warp .uploader {
+  margin-top: 20px;
+  text-align: left;
+}
+.content .picture-warp .uploader .ant-btn {
+  font-size: 16px;
+}
+.content .picture-warp .uploader .ant-input {
+  font-size: small;
+  width: 200px;
+  margin-right: 10px;
+}
+.content .picture-warp .uploader .ant_upload {
+  display: inline !important;
+}
+.content .buttons > :not(:last-child) {
+  margin-right: 1.5rem;
+}
+.g-pic {
+  width: 80vw;
+  margin: 0 auto;
+}
+.g-pic .m-pic-wrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.g-pic .m-pic-wrap .m-pic {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
+  width: 500px;
+  background: #495057;
+  margin: 10px;
+}
+.m-logo {
+  padding: 0 !important;
+}
+.g-ache .m-upload-btn {
+  max-width: 450px;
+  margin: 10px auto;
+}

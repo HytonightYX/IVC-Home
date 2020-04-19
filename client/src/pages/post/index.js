@@ -13,9 +13,9 @@ class Post extends React.Component {
 
 	componentDidMount() {
 		const id = this.props.match.params.id
-		this.setState({loading: true})
+		this.setState({ loading: true })
 
-		axios.post(API_POST_FULL, {id})
+		axios.post(API_POST_FULL, { id })
 			.then(r => {
 				if (r && r.status === 200 && r.data.code === 200) {
 					this.setState({
@@ -25,12 +25,12 @@ class Post extends React.Component {
 			})
 			.catch((e) => {
 				message.error('遇到错误')
-				this.setState({loading: false})
+				this.setState({ loading: false })
 			})
 	}
 
 	render() {
-		const {post} = this.state
+		const { post } = this.state
 
 		return (
 			<div className='g-post'>
@@ -47,8 +47,8 @@ class Post extends React.Component {
 					</div>
 				</div>
 
-				<div className="content">
-					<div className="braft-output-content" dangerouslySetInnerHTML={{__html: post && post.html}}/>
+				<div className="post-content">
+					<div className="braft-output-content" dangerouslySetInnerHTML={{ __html: post && post.html }} />
 				</div>
 			</div>
 		)
