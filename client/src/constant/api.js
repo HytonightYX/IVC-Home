@@ -11,3 +11,5 @@ export const API_MEMBER_LIST = API_SERVER + '/member'
 export const API_POST_LIST_SIMPLE = API_SERVER + '/post/simple'
 export const API_POST_FULL = API_SERVER + '/post/full'
 export const API_STATIC_IMAGE = API_SERVER + '/static/image'
+
+export const API_HOME_IMAGES = API_SERVER + '/homeimage'

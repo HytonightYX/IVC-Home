@@ -47,7 +47,7 @@ const memberEdit = async (params) => {
 }
 
 /**
- * 获取所有成员信息缩略信息
+ * 获取所有信息缩略信息
  * 用于首页展示和管理端列表展示（去掉多余的文章详情）
  */
 const postListSimple = async () => {
@@ -95,10 +95,20 @@ const postEdit = async (params) => {
 	await pool.query(sql, [params.title, params.raw, params.html, time])
 }
 
+const homeImagesList = async (params) => {
+	const [rows, fields] = await pool.query(`SELECT * FROM home_image`)
+	if (rows[0]) {
+		return rows
+	} else {
+		throw new Error('找不到该文档')
+	}
+}
+
 module.exports = {
 	userLogin,
 	memberList,
 	memberEdit,
+	homeImagesList,
 	postListSimple,
 	postCreate,
 	postDelete,

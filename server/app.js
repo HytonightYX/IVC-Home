@@ -12,11 +12,12 @@ const {
   userLogin,
   memberList,
   memberEdit,
+  homeImagesList,
   postListSimple,
   postEdit,
   postCreate,
   postDelete,
-  postGetFull
+  postGetFull,
 } = require('./db/func')
 
 qiniu.conf.ACCESS_KEY = '25E0vVorHfwQElXxDFiyo3dydVPg7gpmAy7eRjrt'
@@ -190,6 +191,19 @@ app.post('/qiniutoken', async (req, res) => {
   try {
     const token = getToken()
     res.status(200).json({ code: 200, data: { token }, msg: '获取token成功' })
+  } catch (e) {
+    res.status(200).json({ code: -1, data: {}, msg: e.message })
+  }
+})
+
+/**
+ * 获取所有首页大图url
+ */
+app.get('/homeimage', async (req, res) => {
+  console.log('hello')
+  try {
+    const list = await homeImagesList()
+    res.status(200).json({ code: 200, data: list, msg: '获取首页大图' })
   } catch (e) {
     res.status(200).json({ code: -1, data: {}, msg: e.message })
   }

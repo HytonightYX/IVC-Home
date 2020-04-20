@@ -2,7 +2,8 @@ import React from 'react'
 import { Carousel } from 'antd'
 import './style.less'
 
-const HomeCarousel = ({ mobile }) => {
+const HomeCarousel = ({ mobile, images }) => {
+  console.log(images)
   return (
     <div className="g-carousel">
       <div className="m-title-wrap">
@@ -41,9 +42,9 @@ const HomeCarousel = ({ mobile }) => {
 
       <div className="bg-carousel">
         <Carousel autoplay>
-          <img src={'https://i.picsum.photos/id/1015/1080/500.jpg'} alt="" />
-          <img src={'https://i.picsum.photos/id/1036/1080/500.jpg'} alt="" />
-          <img src={'https://i.picsum.photos/id/1043/1080/500.jpg'} alt="" />
+          {images.sort((a, b) => (a.index - b.index)).map(item => (
+            <img key={`img${item.id}`} src={item.url} alt="" />
+          ))}
         </Carousel>
       </div>
     </div>

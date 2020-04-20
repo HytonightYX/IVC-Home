@@ -5,14 +5,14 @@ import HomeCarousel from '../../components/HomeCarousel'
 import './style.less'
 import { message, Popover } from 'antd'
 import axios from 'axios'
-import { API_POST_LIST_SIMPLE } from '../../constant/api'
+import { API_POST_LIST_SIMPLE, API_HOME_IMAGES } from '../../constant/api'
 import { formatTs } from '../../utils/date'
-import MoreImg from './more.png'
 
 @withRouter
 class Home extends React.Component {
   state = {
-    posts: []
+    posts: [],
+    images: []
   }
 
   gotoPost = id => {
@@ -25,20 +25,32 @@ class Home extends React.Component {
       .then(r => {
         if (r && r.status === 200) {
           const posts = r.data.data
-          console.log(posts)
           this.setState({ posts })
         }
       })
       .catch(e => {
         message.error('网络错误，获取动态失败')
       })
+
+
+    axios
+      .get(API_HOME_IMAGES)
+      .then(r => {
+        if (r && r.status === 200) {
+          const images = r.data.data
+          this.setState({ images })
+        }
+      })
+      .catch(e => {
+        message.error('网络错误，获取首页图失败')
+      })
   }
 
   render() {
-    const { posts } = this.state
+    const { posts, images } = this.state
     return (
       <div className="g-home">
-        <HomeCarousel />
+        <HomeCarousel images={images} />
 
         <div className="m-wedo">
           <div className="content">
